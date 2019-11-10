@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebStore.Clients.Value;
 using WebStore.DAL;
 using WebStore.Domain.Entitys;
+using WebStore.Interfaces.Api;
 using WebStore.Interfaces.Services;
 using WebStore.Services.Services;
 
@@ -43,6 +45,8 @@ namespace WebStore
                 o.Password.RequireUppercase = false;
             });
             services.ConfigureApplicationCookie(o => TimeSpan.FromDays(10));
+
+            services.AddSingleton<IValueService, ValuesClient>();
 
             services.AddSingleton<IEmployeeService, EmployeeService>();
             services.AddScoped<IProductService, SqlProductService>();
