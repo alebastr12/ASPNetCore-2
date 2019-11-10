@@ -1,0 +1,90 @@
+﻿@model AdminProductViewModel
+@{
+    ViewBag.Title = "Список продуктов";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+    <form class="form-inline" asp-action="ProductList" asp-area="Admin" asp-controller="Home" method="get">
+        <label>Фильтр по: </label>
+        <div class="form-group">
+            <label asp-for="filter.Name" class="control-label"></label>
+            <input asp-for="filter.Name" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label asp-for="filter.BrandId" class="control-label"></label>
+            <select asp-for="filter.BrandId" asp-items="@Model.BrandList" class="form-control"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="filter.CategoryId" class="control-label"></label>
+            <select asp-for="filter.CategoryId" asp-items="@Model.CategoryList" class="form-control"></select>
+        </div>
+        <input type="submit" value="Применить" class="btn btn-default" />
+        <a asp-action="ProductList" asp-area="Admin" class="btn btn-default">Сбросить фильтр</a>
+    </form>
+    <hr/>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    ИД
+                </th>
+                <th>
+                    Имя
+                </th>
+                <th>
+                    Категория
+                </th>
+                <th>
+                    Брэнд
+                </th>
+                <th>
+                    Порядок
+                </th>
+                <th>
+                    Изображение
+                </th>
+                <th>
+                    Цена
+                </th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ProductList)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Brand.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImageUrl)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a>
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-minus"></i></a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+<a asp-action="Edit" class="btn btn-success">Добавить</a>
+

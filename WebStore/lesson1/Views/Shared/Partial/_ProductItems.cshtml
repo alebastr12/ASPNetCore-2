@@ -1,0 +1,43 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<ProductViewModel>
+    <div class="features_items">
+        <!--features_items-->
+        <h2 class="title text-center">Товары</h2>
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-4">
+                <div class="product-image-wrapper">
+                    <div class="single-products">
+                        <div class="productinfo text-center">
+                            <a asp-action="ProductDetails" asp-route-id="@item.Id">
+                                <img src="~/images/shop/@item.ImageUrl" alt="" />
+                                <h2>@item.Price.ToString()</h2>
+                                <p>@item.Name</p>
+                            </a>
+                            <a asp-controller="Cart"
+                               asp-action="AddToCart"
+                               asp-route-id="@item.Id"
+                               asp-route-returnUrl="@Context.Request.Path"
+                               class="btn btn-default add-to-cart">
+                            <i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </div>
+                        @*<div class="product-overlay">
+                            <div class="overlay-content">
+                                <h2>@item.Price.ToString()</h2>
+                                <p>@item.Name</p>
+                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            </div>
+                        </div>*@
+                    </div>
+                    <div class="choose">
+                        <ul class="nav nav-pills nav-justified">
+                            <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                            <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        }
+    </div><!--features_items-->

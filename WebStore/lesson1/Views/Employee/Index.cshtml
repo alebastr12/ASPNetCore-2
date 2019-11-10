@@ -1,0 +1,41 @@
+﻿@model IEnumerable<EmployeeView>
+@{
+    ViewBag.Title = "Список сотрудников";
+    var IsAdmin = User.IsInRole("Administrator");
+}
+<h3>Список сотрудников:</h3>
+
+<table class="table table-striped">
+    <tr>
+        <td>ИД</td>
+        <td>Фамилия</td>
+        <td>Имя</td>
+        <td>Отчество</td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>@item.Id</td>
+    <td>@item.SurName</td>
+    <td>@item.FirstName</td>
+    <td>@item.Patronymic</td>
+    <td>@Html.ActionLink("Детали", "Details", new { id = item.Id })</td>
+    @if (IsAdmin)
+    {
+        <td><a asp-action="Edit" asp-route-id="@item.Id"><i class="fa fa-edit"></i></a></td>
+        <td><a asp-action="Delete" asp-route-id="@item.Id"><i class="fa fa-minus"></i></a></td>
+    }
+
+</tr>
+    }
+</table>
+@if (IsAdmin)
+{
+    <a asp-action="Edit" class="btn btn-success">Добавить</a>
+}
+
+
+

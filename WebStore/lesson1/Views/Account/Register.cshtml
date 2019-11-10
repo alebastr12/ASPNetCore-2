@@ -1,0 +1,36 @@
+﻿@model RegisterViewModel
+@{
+    ViewBag.Title = "Регистрация нового пользователя";
+}
+<section id="form">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="signup-form">
+                <!--sign up form-->
+                <h2>New User Signup!</h2>
+                <form method="post" asp-action="Register" asp-antiforgery="true">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <input asp-for="UserName" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+
+                    <input asp-for="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+
+                    <input asp-for="PhoneNumber" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+
+                    <input asp-for="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+
+                    <input asp-for="ConfirmPassword" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+
+                    <button type="submit" class="btn btn-default">Signup</button>
+                </form>
+            </div><!--/sign up form-->
+        </div>
+    </div>
+</section>
+    
+
