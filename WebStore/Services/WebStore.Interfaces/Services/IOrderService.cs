@@ -12,7 +12,7 @@ namespace WebStore.Interfaces.Services
     {
         IEnumerable<OrderDTO> GetOrders(string UserName);
         OrderDTO GetOrderById(int Id);
-        OrderDTO CreateOrder(OrderDetailsViewModel OrderDetails, string UserName);
+        OrderDTO CreateOrder(CreateOrderModel OrderDetails, string UserName);
 
     }
 }

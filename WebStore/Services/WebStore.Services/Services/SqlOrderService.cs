@@ -22,7 +22,7 @@ namespace WebStore.Services.Services
             this.context = context;
             this.userManager = userManager;
         }
-        public OrderDTO CreateOrder(OrderDetailsViewModel OrderDetails, string UserName)
+        public OrderDTO CreateOrder(CreateOrderModel OrderDetails, string UserName)
         {
             var user = userManager.FindByNameAsync(UserName).Result;
             if (user is null)
@@ -37,10 +37,9 @@ namespace WebStore.Services.Services
                     User = user
                 };
                 context.Orders.Add(order);
-                foreach (var item in OrderDetails.Cart.Items)
+                foreach (var item in OrderDetails.OrderItems)
                 {
-                    var productVM = item.Key;
-                    var product = context.Products.FirstOrDefault(p => p.Id == productVM.Id);
+                    var product = context.Products.FirstOrDefault(p => p.Id == item.ProductId);
                     if (product is null)
                     {
                         throw new InvalidOperationException("Товар не найден в БД");
@@ -49,8 +48,8 @@ namespace WebStore.Services.Services
                     {
                         Order=order,
                         Product=product,
-                        Quantity=item.Value,
-                        TotalPrice= item.Value*product.Price
+                        Quantity=item.Quantity,
+                        TotalPrice= item.Quantity*product.Price
                     };
                     context.OrderItems.Add(orderItem);
                     

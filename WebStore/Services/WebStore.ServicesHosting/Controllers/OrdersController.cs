@@ -21,7 +21,7 @@ namespace WebStore.ServicesHosting.Controllers
             this.orderService = orderService;
         }
         [HttpPost("{UserName}")]
-        public OrderDTO CreateOrder([FromBody] OrderDetailsViewModel OrderDetails, string UserName) =>
+        public OrderDTO CreateOrder([FromBody] CreateOrderModel OrderDetails, string UserName) =>
             orderService.CreateOrder(OrderDetails, UserName);
         [HttpGet("{Id}")]
         public OrderDTO GetOrderById(int Id) => orderService.GetOrderById(Id);

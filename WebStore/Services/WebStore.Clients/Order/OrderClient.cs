@@ -16,7 +16,7 @@ namespace WebStore.Clients.Order
         {
 
         }
-        public OrderDTO CreateOrder(OrderDetailsViewModel OrderDetails, string UserName) =>
+        public OrderDTO CreateOrder(CreateOrderModel OrderDetails, string UserName) =>
             Post($"{_serviceAddress}/{UserName}", OrderDetails)
             .Content
             .ReadAsAsync<OrderDTO>()
