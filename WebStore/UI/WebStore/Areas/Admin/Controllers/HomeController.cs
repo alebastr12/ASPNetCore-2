@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebStore.Domain.Entitys;
 using WebStore.Domain.Filters;
+using WebStore.Domain.EntitysDTO;
 
 namespace WebStore.Areas.Admin.Controllers
 {
@@ -44,7 +45,15 @@ namespace WebStore.Areas.Admin.Controllers
             //ViewBag.Category = categoryList;
             return View(new AdminProductViewModel
             {
-                ProductList = productService.GetProducts(filter),
+                ProductList = productService.GetProducts(filter).Select(p=>new Product {
+                    BrandId = p.Brand.Id,
+                    CategoryId=p.Category.Id,
+                    Id=p.Id,
+                    ImageUrl=p.ImageUrl,
+                    Name=p.Name,
+                    Order=p.Order,
+                    Price=p.Price
+                }),
                 BrandList = brandList,
                 CategoryList = categoryList
             });
@@ -65,8 +74,8 @@ namespace WebStore.Areas.Admin.Controllers
             return View(new EditProductViewModel 
             { 
                 Id=editItem.Id,
-                BrandId=editItem.BrandId,
-                CategoryId=editItem.CategoryId,
+                BrandId=editItem.Brand.Id,
+                CategoryId=editItem.Category.Id,
                 Name=editItem.Name,
                 Order=editItem.Order,
                 Price=editItem.Price
@@ -76,6 +85,7 @@ namespace WebStore.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             productService.Delete(id);
+            productService.Commit();
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
@@ -120,15 +130,17 @@ namespace WebStore.Areas.Admin.Controllers
                 editProd.Name = model.Name;
                 editProd.Order = model.Order;
                 editProd.Price = model.Price;
-                editProd.BrandId = model.BrandId;
-                editProd.CategoryId = model.CategoryId;
+                editProd.Brand.Id = model.BrandId;
+                editProd.Category.Id = model.CategoryId;
             }
             else
             {
-                productService.AddProduct(new Product
+                productService.AddProduct(new ProductDTO
                 {
-                    BrandId=model.BrandId,
-                    CategoryId=model.CategoryId,
+                    Brand=new BrandDTO { Id= model.BrandId },
+                    Category=new CategoryDTO { Id= model.CategoryId },
+                    //BrandId=model.BrandId,
+                    //CategoryId=model.CategoryId,
                     ImageUrl=model.ImageUrl?.FileName,
                     Name=model.Name,
                     Order=model.Order,

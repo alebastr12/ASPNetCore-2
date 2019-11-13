@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebStore.Domain.Entitys;
+using WebStore.Domain.EntitysDTO;
 using WebStore.Domain.Filters;
 
 namespace WebStore.Interfaces.Services
 {
     public interface IProductService
     {
-        IEnumerable<Category> GetCategories();
-        IEnumerable<Brand> GetBrands();
-        IEnumerable<Product> GetProducts(ProductFilter filter);
-        Product GetProductById(int id);
+        IEnumerable<CategoryDTO> GetCategories();
+        IEnumerable<BrandDTO> GetBrands();
+        IEnumerable<ProductDTO> GetProducts(ProductFilter filter);
+        ProductDTO GetProductById(int id);
         void Delete(int? id);
-        void AddProduct(Product item);
+        //void AddProduct(Product item);
+        void AddProduct(ProductDTO item);
         void Commit();
     }
 }

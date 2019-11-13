@@ -8,7 +8,7 @@ using WebStore.Domain.Filters;
 
 namespace WebStore.Services.Services
 {
-    public class InMemoryProductService : IProductService
+    public class InMemoryProductService //: IProductService
     {
         private readonly List<Category> _categories;
         private readonly List<Brand> _brands;

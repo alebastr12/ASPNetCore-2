@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebStore.Clients.Employees;
+using WebStore.Clients.Order;
+using WebStore.Clients.ProductClient;
 using WebStore.Clients.Value;
 using WebStore.DAL;
 using WebStore.Domain.Entitys;
@@ -50,9 +52,9 @@ namespace WebStore
             services.AddSingleton<IValueService, ValuesClient>();
 
             services.AddSingleton<IEmployeeService, EmployeeClient>();
-            services.AddScoped<IProductService, SqlProductService>();
+            services.AddScoped<IProductService, ProductClient>();
             services.AddScoped<ICartService, CookieCartService>();
-            services.AddScoped<IOrderService, SqlOrderService>();
+            services.AddScoped<IOrderService, OrderClient>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
