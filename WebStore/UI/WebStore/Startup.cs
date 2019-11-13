@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using WebStore.Clients.Employees;
 using WebStore.Clients.Value;
 using WebStore.DAL;
 using WebStore.Domain.Entitys;
@@ -48,7 +49,7 @@ namespace WebStore
 
             services.AddSingleton<IValueService, ValuesClient>();
 
-            services.AddSingleton<IEmployeeService, EmployeeService>();
+            services.AddSingleton<IEmployeeService, EmployeeClient>();
             services.AddScoped<IProductService, SqlProductService>();
             services.AddScoped<ICartService, CookieCartService>();
             services.AddScoped<IOrderService, SqlOrderService>();

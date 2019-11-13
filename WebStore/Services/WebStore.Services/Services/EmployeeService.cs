@@ -43,6 +43,8 @@ namespace WebStore.Services.Services
         }
         public void AddNew(EmployeeView model)
         {
+            if (model is null)
+                throw new ArgumentNullException(nameof(model));
             model.Id = _employeeViews.Max(e => e.Id) + 1;
             _employeeViews.Add(model);
         }
@@ -68,6 +70,22 @@ namespace WebStore.Services.Services
         public EmployeeView GetById(int id)
         {
             return _employeeViews.FirstOrDefault(e => e.Id == id);
+        }
+
+        public EmployeeView Update(int id, EmployeeView model)
+        {
+            if (model is null)
+                throw new ArgumentNullException(nameof(model));
+            var item = GetById(id);
+            if (item is null)
+                throw new InvalidOperationException($"Сотрудник с id={id} не найден.");
+            item.DateOfBirth = model.DateOfBirth;
+            item.FirstName = model.FirstName;
+            item.Patronymic = model.Patronymic;
+            item.Post = model.Post;
+            item.SurName = model.SurName;
+            
+            return item;
         }
     }
 }
