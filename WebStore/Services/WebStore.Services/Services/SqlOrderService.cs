@@ -102,7 +102,7 @@ namespace WebStore.Services.Services
 
         public IEnumerable<OrderDTO> GetOrders(string UserName)
         {
-            var orders = context.Orders.Include(o => o.User).Include(o => o.Items).AsEnumerable().Where(o => o.User.UserName == UserName);
+            var orders = context.Orders.Include(o => o.User).Include(o => o.Items).Where(o => o.User.UserName == UserName).ToArray();
             return orders.Select(o => new OrderDTO
             {
                 Id = o.Id,
@@ -114,7 +114,7 @@ namespace WebStore.Services.Services
                 {
                     Id = i.Id,
                     OrderId = i.Order.Id,
-                    ProductId = i.Product.Id,
+                    ProductId = i.Product?.Id??0, //Костыль! почему то не грузятся продукты..
                     Quantity = i.Quantity,
                     TotalPrice = i.TotalPrice
                 })

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using WebStore.DAL;
+using WebStore.Domain.Entitys;
 using WebStore.Interfaces.Services;
 using WebStore.Services.Services;
 
@@ -33,12 +35,27 @@ namespace WebStore.ServicesHosting
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             
             services.AddDbContext<WebStoreContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<WebStoreContext>()
+                .AddDefaultTokenProviders();
+            services.Configure<IdentityOptions>(o =>
+            {
+                o.Password.RequiredLength = 4;
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequireUppercase = false;
+            });
+            services.ConfigureApplicationCookie(o => TimeSpan.FromDays(10));
+
             services.AddSingleton<IEmployeeService, EmployeeService>();
             services.AddScoped<IProductService, SqlProductService>();
             services.AddScoped<ICartService, CookieCartService>();
             services.AddScoped<IOrderService, SqlOrderService>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            //TODO: добавить Swashbuckle.AspNetCore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
