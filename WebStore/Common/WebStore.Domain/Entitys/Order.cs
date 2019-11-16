@@ -12,6 +12,6 @@ namespace WebStore.Domain.Entitys
         public DateTime DateTime { get; set; }
         public string Address { get; set; }
         public virtual User User { get; set; }
-        public virtual Collection<OrderItem> Items { get; set; }
+        public virtual ICollection<OrderItem> Items { get; set; }
     }
 }
