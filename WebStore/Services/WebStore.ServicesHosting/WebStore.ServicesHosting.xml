@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebStore.ServicesHosting</name>
+    </assembly>
+    <members>
+        <member name="M:WebStore.ServicesHosting.Controllers.ProductController.#ctor(WebStore.Interfaces.Services.IProductService)">
+            <summary>
+            Конструктор сервиса
+            </summary>
+            <param name="productService">Сервис работы с продуктами</param>
+        </member>
+        <member name="M:WebStore.ServicesHosting.Controllers.ProductController.AddProduct(WebStore.Domain.EntitysDTO.ProductDTO)">
+            <summary>
+            Добавить продукт в базу
+            </summary>
+            <param name="item">Продукт для добавления</param>
+        </member>
+        <member name="M:WebStore.ServicesHosting.Controllers.ProductController.Commit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:WebStore.ServicesHosting.Controllers.ProductController.Delete(System.Nullable{System.Int32})">
+            <summary>
+            Удалить продукт из базы
+            </summary>
+            <param name="id">Идентификатор продукта, который нужно удалить</param>
+        </member>
+        <member name="M:WebStore.ServicesHosting.Controllers.ProductController.GetBrands">
+            <summary>
+            Получить список брэндов
+            </summary>
+            <returns>Список всех брэндов</returns>
+        </member>
+        <member name="M:WebStore.ServicesHosting.Controllers.ProductController.GetCategories">
+            <summary>
+            Получить список категорий
+            </summary>
+            <returns>Список всех категорий</returns>
+        </member>
+        <member name="M:WebStore.ServicesHosting.Controllers.ProductController.GetProductById(System.Int32)">
+            <summary>
+            Получить продукт по его идентификатору
+            </summary>
+            <param name="id">Идентификатор продукта</param>
+            <returns>Продукт по заданному идентификатору</returns>
+        </member>
+        <member name="M:WebStore.ServicesHosting.Controllers.ProductController.GetProducts(WebStore.Domain.Filters.ProductFilter)">
+            <summary>
+            Получить список продуктов по заданному фильтру
+            </summary>
+            <param name="filter">Фильтр запроса</param>
+            <returns>Список продуктов</returns>
+        </member>
+    </members>
+</doc>
