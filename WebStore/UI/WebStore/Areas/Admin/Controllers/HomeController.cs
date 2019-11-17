@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using WebStore.Domain.Entitys;
 using WebStore.Domain.Filters;
 using WebStore.Domain.EntitysDTO;
+using WebStore.Services.Map;
 
 namespace WebStore.Areas.Admin.Controllers
 {
@@ -43,20 +44,13 @@ namespace WebStore.Areas.Admin.Controllers
         {
             //ViewBag.Brands = brandList;
             //ViewBag.Category = categoryList;
-            return View(new AdminProductViewModel
+            var products = new AdminProductViewModel
             {
-                ProductList = productService.GetProducts(filter).Select(p=>new Product {
-                    BrandId = p.Brand.Id,
-                    CategoryId=p.Category.Id,
-                    Id=p.Id,
-                    ImageUrl=p.ImageUrl,
-                    Name=p.Name,
-                    Order=p.Order,
-                    Price=p.Price
-                }),
+                ProductList = productService.GetProducts(filter).Select(ProductMapper.FromDTO),
                 BrandList = brandList,
                 CategoryList = categoryList
-            });
+            };
+            return View(products);
         }
         public IActionResult Edit(int? id)
         {
@@ -121,9 +115,9 @@ namespace WebStore.Areas.Admin.Controllers
             }
             if (model.Id > 0)
             {
-                //var editProd = productService.GetProductById(model.Id);
-                //if (editProd is null)
-                //    return NotFound();
+                var editProd = productService.GetProductById(model.Id);
+                if (editProd is null)
+                    return NotFound();
                 //if (model.ImageUrl != null)
                 //    editProd.ImageUrl = model.ImageUrl.FileName;
                 //editProd.Name = model.Name;
@@ -136,7 +130,7 @@ namespace WebStore.Areas.Admin.Controllers
                     Id = model.Id,
                     Brand = new BrandDTO { Id = model.BrandId },
                     Category = new CategoryDTO { Id = model.CategoryId },
-                    ImageUrl = model.ImageUrl?.FileName,
+                    ImageUrl = model.ImageUrl?.FileName??editProd.ImageUrl,
                     Name = model.Name,
                     Order = model.Order,
                     Price = model.Price

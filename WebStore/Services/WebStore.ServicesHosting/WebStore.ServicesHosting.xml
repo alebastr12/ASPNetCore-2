@@ -4,7 +4,36 @@
         <name>WebStore.ServicesHosting</name>
     </assembly>
     <members>
-        <member name="M:WebStore.ServicesHosting.Controllers.ProductController.#ctor(WebStore.Interfaces.Services.IProductService)">
+        <member name="M:WebStore.ServicesHosting.Controllers.OrdersController.#ctor(WebStore.Interfaces.Services.IOrderService,Microsoft.Extensions.Logging.ILogger{WebStore.ServicesHosting.Controllers.OrdersController})">
+            <summary>
+            Конструктор контроллера заказов
+            </summary>
+            <param name="orderService">Сервис для работы с заказами</param>
+            <param name="logger">Логгер</param>
+        </member>
+        <member name="M:WebStore.ServicesHosting.Controllers.OrdersController.CreateOrder(WebStore.Domain.EntitysDTO.CreateOrderModel,System.String)">
+            <summary>
+            Создание нового заказа в БД
+            </summary>
+            <param name="OrderDetails">Объект деталей заказа</param>
+            <param name="UserName">Имя пользователя создавшего заказ</param>
+            <returns>Объект заказа</returns>
+        </member>
+        <member name="M:WebStore.ServicesHosting.Controllers.OrdersController.GetOrderById(System.Int32)">
+            <summary>
+            Получить заказ по идентификатору
+            </summary>
+            <param name="Id">Идентификатор заказа</param>
+            <returns>Объект заказа</returns>   
+        </member>
+        <member name="M:WebStore.ServicesHosting.Controllers.OrdersController.GetOrders(System.String)">
+            <summary>
+            Получить все заказы пользователя
+            </summary>
+            <param name="UserName">Имя пользователя</param>
+            <returns>Список заказов пользователя</returns>
+        </member>
+        <member name="M:WebStore.ServicesHosting.Controllers.ProductController.#ctor(WebStore.Interfaces.Services.IProductService,Microsoft.Extensions.Logging.ILogger{WebStore.ServicesHosting.Controllers.ProductController})">
             <summary>
             Конструктор сервиса
             </summary>

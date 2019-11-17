@@ -16,12 +16,10 @@ namespace WebStore.DAL
         {
             context.Database.EnsureCreated();
             // Look for any products.
-            if (context.Products.Any())
-            {
-                return;   // DB had already been seeded
-            }
 
-            var categories = new List<Category>
+            if (!context.Categories.Any())
+            {
+                var categories = new List<Category>
             {
                 new Category()
                 {
@@ -234,20 +232,23 @@ namespace WebStore.DAL
                     ParentId = null
                 }
             };
-
-            using (var trans = context.Database.BeginTransaction())
-            {
-                foreach (var section in categories)
+                using (var trans = context.Database.BeginTransaction())
                 {
-                    context.Categories.Add(section);
-                }
+                    foreach (var section in categories)
+                    {
+                        context.Categories.Add(section);
+                    }
 
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Categories] ON");
-                context.SaveChanges(); // применяем изменения в БД
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Categories] OFF");
-                trans.Commit();
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Categories] ON");
+                    context.SaveChanges(); // применяем изменения в БД
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Categories] OFF");
+                    trans.Commit();
+                }
             }
-            var brands = new List<Brand>()
+
+            if (!context.Brands.Any())
+            {
+                var brands = new List<Brand>()
             {
                 new Brand()
                 {
@@ -292,19 +293,23 @@ namespace WebStore.DAL
                     Order = 6
                 },
             };
-            using (var trans = context.Database.BeginTransaction())
-            {
-                foreach (var brand in brands)
+                using (var trans = context.Database.BeginTransaction())
                 {
-                    context.Brands.Add(brand);
-                }
+                    foreach (var brand in brands)
+                    {
+                        context.Brands.Add(brand);
+                    }
 
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brands] ON");
-                context.SaveChanges(); // применяем изменения в БД
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brands] OFF");
-                trans.Commit();
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brands] ON");
+                    context.SaveChanges(); // применяем изменения в БД
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Brands] OFF");
+                    trans.Commit();
+                }
             }
-            var products = new List<Product>()
+
+            if (!context.Products.Any())
+            {
+                var products = new List<Product>()
             {
                 new Product()
                 {
@@ -427,17 +432,19 @@ namespace WebStore.DAL
                     BrandId = 3
                 },
             };
-            using (var trans = context.Database.BeginTransaction())
-            {
-                foreach (var product in products)
+                using (var trans = context.Database.BeginTransaction())
                 {
-                    context.Products.Add(product);
+                    foreach (var product in products)
+                    {
+                        context.Products.Add(product);
+                    }
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] ON");
+                    context.SaveChanges(); // применяем изменения в БД
+                    context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] OFF");
+                    trans.Commit();
                 }
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] ON");
-                context.SaveChanges(); // применяем изменения в БД
-                context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT [dbo].[Products] OFF");
-                trans.Commit();
             }
+                
 
         }
 
