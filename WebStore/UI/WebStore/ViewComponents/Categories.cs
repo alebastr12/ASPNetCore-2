@@ -25,7 +25,7 @@ namespace WebStore.ViewComponents
         {
             var categories = _productService.GetCategories();
             // получим и заполним родительские категории
-            var parentSections = categories.Where(p => !p.ParentId.HasValue).ToArray();
+            var parentSections = categories.Where(p => (p.ParentCategory is null)).ToArray();
             var parentCategories = new List<CategoryViewModel>();
             foreach (var parentCategory in parentSections)
             {
@@ -40,7 +40,7 @@ namespace WebStore.ViewComponents
             // получим и заполним дочерние категории
             foreach (var CategoryViewModel in parentCategories)
             {
-                var childCategories = categories.Where(c => c.ParentId == CategoryViewModel.Id);
+                var childCategories = categories.Where(c => c.ParentCategory?.Id == CategoryViewModel.Id);
                 foreach (var childCategory in childCategories)
                 {
                     CategoryViewModel.ChildCategories.Add(new CategoryViewModel()

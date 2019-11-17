@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Domain.Entitys;
+using WebStore.Domain.EntitysDTO;
 
 namespace WebStore.Controllers
 {
@@ -41,9 +42,13 @@ namespace WebStore.Controllers
         {
             if (ModelState.IsValid)
             {
-                var OrderDetails = orderService.CreateOrder(new OrderDetailsViewModel 
+                var OrderDetails = orderService.CreateOrder(new CreateOrderModel
                 {
-                    Cart=cartService.TransformCart(),
+                    OrderItems = cartService.TransformCart().Items.Select(e=>new OrderItemDTO { 
+                        ProductId=e.Key.Id,
+                        Quantity=e.Value,
+                    }).ToList(),
+                    //Cart=cartService.TransformCart(),
                     Order=model.Order
                 }, User.Identity.Name);
                 cartService.RemoveAll();

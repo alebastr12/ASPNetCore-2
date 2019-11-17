@@ -52,14 +52,14 @@ namespace WebStore.Controllers
                 return View(model);
             if (model.Id > 0)
             {
-                var dbItem = _employeeService.GetById(model.Id);
+                var dbItem = _employeeService.Update(model.Id,model);
                 if (dbItem is null)
                     return NotFound();
-                dbItem.FirstName = model.FirstName;
-                dbItem.SurName = model.SurName;
-                dbItem.Patronymic = model.Patronymic;
-                dbItem.DateOfBirth = model.DateOfBirth;
-                dbItem.Post = model.Post;
+                //dbItem.FirstName = model.FirstName;
+                //dbItem.SurName = model.SurName;
+                //dbItem.Patronymic = model.Patronymic;
+                //dbItem.DateOfBirth = model.DateOfBirth;
+                //dbItem.Post = model.Post;
             }
             else
             {

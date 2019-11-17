@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebStore.DAL;
 using WebStore.Domain.Entitys;
+using WebStore.Domain.EntitysDTO;
 
 namespace WebStore.Services.Services
 {
@@ -21,7 +22,7 @@ namespace WebStore.Services.Services
             this.context = context;
             this.userManager = userManager;
         }
-        public Order CreateOrder(OrderDetailsViewModel OrderDetails, string UserName)
+        public OrderDTO CreateOrder(CreateOrderModel OrderDetails, string UserName)
         {
             var user = userManager.FindByNameAsync(UserName).Result;
             if (user is null)
@@ -36,10 +37,9 @@ namespace WebStore.Services.Services
                     User = user
                 };
                 context.Orders.Add(order);
-                foreach (var item in OrderDetails.Cart.Items)
+                foreach (var item in OrderDetails.OrderItems)
                 {
-                    var productVM = item.Key;
-                    var product = context.Products.FirstOrDefault(p => p.Id == productVM.Id);
+                    var product = context.Products.FirstOrDefault(p => p.Id == item.ProductId);
                     if (product is null)
                     {
                         throw new InvalidOperationException("Товар не найден в БД");
@@ -48,8 +48,8 @@ namespace WebStore.Services.Services
                     {
                         Order=order,
                         Product=product,
-                        Quantity=item.Value,
-                        TotalPrice= item.Value*product.Price
+                        Quantity=item.Quantity,
+                        TotalPrice= item.Quantity*product.Price
                     };
                     context.OrderItems.Add(orderItem);
                     
@@ -57,20 +57,68 @@ namespace WebStore.Services.Services
                 context.SaveChanges();
                 trans.Commit();
 
-                return order;
+                return new OrderDTO { 
+                    Id=order.Id,
+                    Address=order.Address,
+                    DateTime=order.DateTime,
+                    Phone = order.Phone,
+                    UserName=order.User.UserName,
+                    Items = order.Items.Select(i=>new OrderItemDTO {
+                        Id=i.Id,
+                        OrderId=i.Order.Id,
+                        ProductId=i.Product.Id,
+                        Quantity=i.Quantity,
+                        TotalPrice=i.TotalPrice
+                    }
+                    )
+                };
             }
             
 
         }
 
-        public Order GetOrderById(int Id)
+        public OrderDTO GetOrderById(int Id)
         {
-            return context.Orders.Include(o => o.User).Include(o => o.Items).FirstOrDefault(o => o.Id == Id);
+            var item = context.Orders.Include(o => o.User).Include(o => o.Items).FirstOrDefault(o => o.Id == Id);
+            return item is null ? null :
+                new OrderDTO
+                {
+                    Id = item.Id,
+                    Address = item.Address,
+                    DateTime = item.DateTime,
+                    Phone = item.Phone,
+                    UserName = item.User.UserName,
+                    Items = item.Items.Select(i => new OrderItemDTO
+                    {
+                        Id = i.Id,
+                        OrderId = i.Order.Id,
+                        ProductId = i.Product.Id,
+                        Quantity = i.Quantity,
+                        TotalPrice = i.TotalPrice
+                    }
+                    )
+                };
         }
 
-        public IEnumerable<Order> GetOrders(string UserName)
+        public IEnumerable<OrderDTO> GetOrders(string UserName)
         {
-            return context.Orders.Include(o => o.User).Include(o => o.Items).Where(o => o.User.UserName == UserName).ToList();
+            var orders = context.Orders.Include(o => o.User).Include(o => o.Items).AsEnumerable().Where(o => o.User.UserName == UserName);
+            return orders.Select(o => new OrderDTO
+            {
+                Id = o.Id,
+                Address = o.Address,
+                DateTime = o.DateTime,
+                Phone = o.Phone,
+                UserName = o.User.UserName,
+                Items = o.Items.Select(i => new OrderItemDTO
+                {
+                    Id = i.Id,
+                    OrderId = i.Order.Id,
+                    ProductId = i.Product.Id,
+                    Quantity = i.Quantity,
+                    TotalPrice = i.TotalPrice
+                })
+            });
         }
     }
 }

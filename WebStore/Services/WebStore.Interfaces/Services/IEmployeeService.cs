@@ -40,5 +40,11 @@ namespace WebStore.Interfaces.Services
         /// </summary>
         /// <param name="id"></param>
         void Delete(int id);
+        /// <summary>
+        /// Редактирование существующего сотрудника
+        /// </summary>
+        /// <param name="id">Id сотрудника для редактирования</param>
+        /// <param name="model">Новые данные сотрудника</param>
+        EmployeeView Update(int id, EmployeeView model);
     }
 }
