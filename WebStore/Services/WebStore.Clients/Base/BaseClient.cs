@@ -34,20 +34,31 @@ namespace WebStore.Clients.Base
             return new T();
         }
         protected T Get<T>(string url) where T : new() => GetAsync<T>(url).Result;
-        protected async Task<HttpResponseMessage> PutAsync<T>(string url, T item, CancellationToken cancel = default) where T : new()
+        protected async Task<HttpResponseMessage> PutAsync<T>(string url, T item, CancellationToken cancel = default)
         {
             var response = await _client.PutAsJsonAsync<T>(url, item, cancel);
             return response.EnsureSuccessStatusCode();
         }
         protected HttpResponseMessage Put<T>(string url, T item) where T : new() => PutAsync<T>(url, item).Result;
-        protected async Task<HttpResponseMessage> PostAsync<T>(string url, T item, CancellationToken cancel = default) where T : new()
+        protected async Task<HttpResponseMessage> PostAsync<T>(string url, T item, CancellationToken cancel = default)
         {
-            var response = await _client.PostAsJsonAsync<T>(url, item, cancel);
+            var response = await _client.PostAsJsonAsync(url, item, cancel);
             return response.EnsureSuccessStatusCode();
         }
         protected HttpResponseMessage Post<T>(string url, T item) where T : new() => PostAsync<T>(url, item).Result;
         protected async Task<HttpResponseMessage> DeleteAsync(string url, CancellationToken cancel = default)
             => await _client.DeleteAsync(url, cancel);
         protected HttpResponseMessage Delete(string url) => DeleteAsync(url).Result;
+
+        public void Dispose() => Dispose(true);
+
+        private bool _Disposed;
+        protected virtual void Dispose(bool Disposing)
+        {
+            if (!Disposing || _Disposed) return;
+            _Disposed = true;
+            _client.Dispose();
+            GC.SuppressFinalize(this);
+        }
     }
 }
