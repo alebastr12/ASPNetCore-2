@@ -94,7 +94,16 @@ namespace WebStore.Services.Services
 
         public void UpdateProduct(ProductDTO item)
         {
-            _context.Products.Update(item.FromDTO());
+            var prod = _context.Products.FirstOrDefault(p => p.Id == item.Id);
+            if (prod is null)
+                return;
+            prod.ImageUrl = item.ImageUrl;
+            prod.Name = item.Name;
+            prod.Order = item.Order;
+            prod.Price = item.Price;
+            prod.BrandId = item.Brand.Id;
+            prod.CategoryId = item.Category.Id;
+            
             Commit();
         }
     }
