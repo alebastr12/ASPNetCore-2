@@ -64,7 +64,6 @@ namespace WebStore.Areas.Admin.Controllers
             ViewBag.Category = categoryList;
             if (!id.HasValue)
             {
-                
                 return View(new EditProductViewModel());
             }
             var editItem = productService.GetProductById(id.Value);
@@ -122,16 +121,26 @@ namespace WebStore.Areas.Admin.Controllers
             }
             if (model.Id > 0)
             {
-                var editProd = productService.GetProductById(model.Id);
-                if (editProd is null)
-                    return NotFound();
-                if (model.ImageUrl != null)
-                    editProd.ImageUrl = model.ImageUrl.FileName;
-                editProd.Name = model.Name;
-                editProd.Order = model.Order;
-                editProd.Price = model.Price;
-                editProd.Brand.Id = model.BrandId;
-                editProd.Category.Id = model.CategoryId;
+                //var editProd = productService.GetProductById(model.Id);
+                //if (editProd is null)
+                //    return NotFound();
+                //if (model.ImageUrl != null)
+                //    editProd.ImageUrl = model.ImageUrl.FileName;
+                //editProd.Name = model.Name;
+                //editProd.Order = model.Order;
+                //editProd.Price = model.Price;
+                //editProd.Brand.Id = model.BrandId;
+                //editProd.Category.Id = model.CategoryId;
+                productService.UpdateProduct(new ProductDTO
+                {
+                    Id = model.Id,
+                    Brand = new BrandDTO { Id = model.BrandId },
+                    Category = new CategoryDTO { Id = model.CategoryId },
+                    ImageUrl = model.ImageUrl?.FileName,
+                    Name = model.Name,
+                    Order = model.Order,
+                    Price = model.Price
+                });
             }
             else
             {

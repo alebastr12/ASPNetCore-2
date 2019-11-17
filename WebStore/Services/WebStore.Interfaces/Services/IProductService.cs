@@ -17,6 +17,7 @@ namespace WebStore.Interfaces.Services
         void Delete(int? id);
         //void AddProduct(Product item);
         void AddProduct(ProductDTO item);
+        void UpdateProduct(ProductDTO item);
         void Commit();
     }
 }

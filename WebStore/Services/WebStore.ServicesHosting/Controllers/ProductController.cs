@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using WebStore.Domain.Entitys;
 using WebStore.Domain.EntitysDTO;
 using WebStore.Domain.Filters;
@@ -16,20 +17,33 @@ namespace WebStore.ServicesHosting.Controllers
     public class ProductController : ControllerBase, IProductService
     {
         private readonly IProductService productService;
+        private readonly ILogger<ProductController> logger;
+
         /// <summary>
         /// Конструктор сервиса
         /// </summary>
         /// <param name="productService">Сервис работы с продуктами</param>
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, ILogger<ProductController> logger)
         {
             this.productService = productService;
+            this.logger = logger;
         }
         /// <summary>
         /// Добавить продукт в базу
         /// </summary>
         /// <param name="item">Продукт для добавления</param>
         [HttpPost("add")]
-        public void AddProduct([FromBody] ProductDTO item) => productService.AddProduct(item);
+        public void AddProduct([FromBody] ProductDTO item)
+        {
+            if (item is null)
+            {
+                logger.LogError("При добавлении нового продукта передана пустая ссылка на объект.");
+                throw new ArgumentNullException(nameof(item));
+            }
+            logger.LogInformation($"Добавление нового продукта: id {item.Id}, Имя {item.Name}");
+            productService.AddProduct(item);
+        }
+        
         /// <summary>
         /// 
         /// </summary>
@@ -40,7 +54,17 @@ namespace WebStore.ServicesHosting.Controllers
         /// </summary>
         /// <param name="id">Идентификатор продукта, который нужно удалить</param>
         [HttpDelete("{id?}")]
-        public void Delete(int? id) => productService.Delete(id);
+        public void Delete(int? id) 
+        {
+            if (id.HasValue)
+            {
+                logger.LogInformation($"Удаление продукта с идентификатором {id}");
+                productService.Delete(id);
+            }
+            else
+                logger.LogError("При удалении продукта передано пустое значение идентификатора");
+                
+        }
         /// <summary>
         /// Получить список брэндов
         /// </summary>
@@ -67,5 +91,17 @@ namespace WebStore.ServicesHosting.Controllers
         /// <returns>Список продуктов</returns>
         [HttpPost]
         public IEnumerable<ProductDTO> GetProducts([FromBody] ProductFilter filter) => productService.GetProducts(filter);
+        [HttpPut]
+        public void UpdateProduct(ProductDTO item)
+        {
+            if (item is null)
+            {
+                logger.LogError("При обновлении продукта передана пустая ссылка.");
+                throw new ArgumentNullException(nameof(item));
+            }
+            logger.LogInformation($"Редактировние данных продукта Id - {item.Id}, имя - {item.Name}");
+            productService.UpdateProduct(item);
+
+        }
     }
 }

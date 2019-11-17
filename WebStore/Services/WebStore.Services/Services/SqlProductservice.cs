@@ -91,5 +91,11 @@ namespace WebStore.Services.Services
             }
             return dbItems.AsEnumerable().Select(ProductMapper.ToDTO);
         }
+
+        public void UpdateProduct(ProductDTO item)
+        {
+            _context.Products.Update(item.FromDTO());
+            Commit();
+        }
     }
 }
