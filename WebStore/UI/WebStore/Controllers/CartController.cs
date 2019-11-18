@@ -47,6 +47,7 @@ namespace WebStore.Controllers
                     OrderItems = cartService.TransformCart().Items.Select(e=>new OrderItemDTO { 
                         ProductId=e.Key.Id,
                         Quantity=e.Value,
+                        
                     }).ToList(),
                     //Cart=cartService.TransformCart(),
                     Order=model.Order

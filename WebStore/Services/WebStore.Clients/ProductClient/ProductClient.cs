@@ -34,5 +34,7 @@ namespace WebStore.Clients.ProductClient
             .Content
             .ReadAsAsync<List<ProductDTO>>()
             .Result;
+
+        public void UpdateProduct(ProductDTO item) => Put<ProductDTO>(_serviceAddress, item);
     }
 }

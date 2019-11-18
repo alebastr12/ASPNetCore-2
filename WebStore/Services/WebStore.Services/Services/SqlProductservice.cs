@@ -8,6 +8,7 @@ using WebStore.DAL;
 using WebStore.Domain.Entitys;
 using WebStore.Domain.Filters;
 using WebStore.Domain.EntitysDTO;
+using WebStore.Services.Map;
 
 namespace WebStore.Services.Services
 {
@@ -24,14 +25,7 @@ namespace WebStore.Services.Services
         {
             if (item is null)
                 return;
-            _context.Products.Add(new Product {
-                BrandId=item.Brand.Id,
-                CategoryId=item.Category.Id,
-                ImageUrl=item.ImageUrl,
-                Name=item.Name,
-                Order=item.Order,
-                Price=item.Price
-            });
+            _context.Products.Add(item.FromDTO());
             Commit();
         }
         public void AddProduct(Product item)
@@ -60,12 +54,7 @@ namespace WebStore.Services.Services
 
         public IEnumerable<BrandDTO> GetBrands()
         {
-            return _context.Brands.AsEnumerable().Select(b=>new BrandDTO {
-                Id=b.Id,
-                Name=b.Name,
-                Order=b.Order
-                
-            });
+            return _context.Brands.AsEnumerable().Select(BrandMapper.ToDTO);
         }
 
         public IEnumerable<CategoryDTO> GetCategories()
@@ -73,18 +62,7 @@ namespace WebStore.Services.Services
             var cat = _context.Categories
                 .Include(category => category.ParentCategory)
                 .AsEnumerable()
-                .Select(c => new CategoryDTO
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Order = c.Order,
-                    ParentCategory = (c.ParentCategory is null) ? null : new CategoryDTO
-                    {
-                        Id = c.ParentCategory.Id,
-                        Name = c.Name,
-                        ParentCategory = null
-                    }
-                });
+                .Select(CategoryMapper.ToDTO);
             return cat;
         }
         public ProductDTO GetProductById(int id)
@@ -92,17 +70,8 @@ namespace WebStore.Services.Services
             return _context.Products
                 .Include(p => p.Category)
                 .Include(p => p.Brand)
-                .Select(p=> new ProductDTO {
-                    Id=p.Id,
-                    ImageUrl=p.ImageUrl,
-                    Name=p.Name,
-                    Order=p.Order,
-                    Price=p.Price,
-                    Brand = p.Brand == null ? null: new BrandDTO { Id=p.BrandId, Name=p.Brand.Name, Order=p.Brand.Order},
-                    Category = p.Category == null ? null : new CategoryDTO { Id = p.CategoryId, Name=p.Category.Name,Order=p.Category.Order}
-                    
-                })
-                .FirstOrDefault(p => p.Id == id);
+                .FirstOrDefault(p => p.Id == id)
+                .ToDTO();
         }
 
         public IEnumerable<ProductDTO> GetProducts(ProductFilter filter)
@@ -120,16 +89,22 @@ namespace WebStore.Services.Services
             {
                 dbItems = dbItems.Where(p => p.Name.Contains(filter.Name));
             }
-            return dbItems.AsEnumerable().Select(p => new ProductDTO
-            {
-                Id = p.Id,
-                ImageUrl = p.ImageUrl,
-                Name = p.Name,
-                Order = p.Order,
-                Price = p.Price,
-                Brand = p.Brand == null ? null : new BrandDTO { Id = p.BrandId, Name = p.Brand.Name, Order = p.Brand.Order },
-                Category = p.Category == null ? null : new CategoryDTO { Id = p.CategoryId, Name = p.Category.Name, Order = p.Category.Order }
-            });
+            return dbItems.AsEnumerable().Select(ProductMapper.ToDTO);
+        }
+
+        public void UpdateProduct(ProductDTO item)
+        {
+            var prod = _context.Products.FirstOrDefault(p => p.Id == item.Id);
+            if (prod is null)
+                return;
+            prod.ImageUrl = item.ImageUrl;
+            prod.Name = item.Name;
+            prod.Order = item.Order;
+            prod.Price = item.Price;
+            prod.BrandId = item.Brand.Id;
+            prod.CategoryId = item.Category.Id;
+            
+            Commit();
         }
     }
 }

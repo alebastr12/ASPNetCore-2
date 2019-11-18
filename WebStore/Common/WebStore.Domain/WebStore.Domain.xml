@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebStore.Domain</name>
+    </assembly>
+    <members>
+        <member name="P:WebStore.Domain.Models.CategoryViewModel.ChildCategories">
+            <summary>
+            Список дочерних категорий
+            </summary>
+        </member>
+        <member name="P:WebStore.Domain.Models.CategoryViewModel.ParentCategory">
+            <summary>
+            Родительская категория
+            </summary>
+        </member>
+    </members>
+</doc>

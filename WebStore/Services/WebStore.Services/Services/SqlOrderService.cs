@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using WebStore.DAL;
 using WebStore.Domain.Entitys;
 using WebStore.Domain.EntitysDTO;
+using WebStore.Services.Map;
 
 namespace WebStore.Services.Services
 {
@@ -57,21 +58,7 @@ namespace WebStore.Services.Services
                 context.SaveChanges();
                 trans.Commit();
 
-                return new OrderDTO { 
-                    Id=order.Id,
-                    Address=order.Address,
-                    DateTime=order.DateTime,
-                    Phone = order.Phone,
-                    UserName=order.User.UserName,
-                    Items = order.Items.Select(i=>new OrderItemDTO {
-                        Id=i.Id,
-                        OrderId=i.Order.Id,
-                        ProductId=i.Product.Id,
-                        Quantity=i.Quantity,
-                        TotalPrice=i.TotalPrice
-                    }
-                    )
-                };
+                return order.ToDTO();
             }
             
 
@@ -79,46 +66,13 @@ namespace WebStore.Services.Services
 
         public OrderDTO GetOrderById(int Id)
         {
-            var item = context.Orders.Include(o => o.User).Include(o => o.Items).FirstOrDefault(o => o.Id == Id);
-            return item is null ? null :
-                new OrderDTO
-                {
-                    Id = item.Id,
-                    Address = item.Address,
-                    DateTime = item.DateTime,
-                    Phone = item.Phone,
-                    UserName = item.User.UserName,
-                    Items = item.Items.Select(i => new OrderItemDTO
-                    {
-                        Id = i.Id,
-                        OrderId = i.Order.Id,
-                        ProductId = i.Product.Id,
-                        Quantity = i.Quantity,
-                        TotalPrice = i.TotalPrice
-                    }
-                    )
-                };
+            return context.Orders.Include(o => o.User).Include(o => o.Items).FirstOrDefault(o => o.Id == Id).ToDTO();
         }
 
         public IEnumerable<OrderDTO> GetOrders(string UserName)
         {
-            var orders = context.Orders.Include(o => o.User).Include(o => o.Items).AsEnumerable().Where(o => o.User.UserName == UserName);
-            return orders.Select(o => new OrderDTO
-            {
-                Id = o.Id,
-                Address = o.Address,
-                DateTime = o.DateTime,
-                Phone = o.Phone,
-                UserName = o.User.UserName,
-                Items = o.Items.Select(i => new OrderItemDTO
-                {
-                    Id = i.Id,
-                    OrderId = i.Order.Id,
-                    ProductId = i.Product.Id,
-                    Quantity = i.Quantity,
-                    TotalPrice = i.TotalPrice
-                })
-            });
+            var orders = context.Orders.Include(o => o.User).Include(o => o.Items).Where(o => o.User.UserName == UserName).ToArray();
+            return orders.Select(OrderMapper.ToDTO);
         }
     }
 }
