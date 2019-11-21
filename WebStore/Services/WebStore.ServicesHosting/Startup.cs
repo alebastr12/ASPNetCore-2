@@ -18,7 +18,7 @@ using WebStore.DAL;
 using WebStore.Domain.Entitys;
 using WebStore.Interfaces.Services;
 using WebStore.Services.Services;
-using WebStore.Logging;
+//using WebStore.Logging;
 using WebStore.ServiceHosting.Infrastructure;
 
 namespace WebStore.ServicesHosting
