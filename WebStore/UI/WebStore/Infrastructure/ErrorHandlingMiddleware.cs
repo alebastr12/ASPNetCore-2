@@ -25,8 +25,8 @@ namespace WebStore.Infrastructure
             }
             catch(Exception e)
             {
-                log.LogError(e, $"Ошибка при обработке запроса {context.Request.Path}");
-                throw e;
+                log.LogError(e, "Ошибка при обработке запроса {0}", context.Request.Path);
+                throw;
             }
         }
     }

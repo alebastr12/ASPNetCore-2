@@ -13,6 +13,7 @@ using WebStore.Domain.Entitys;
 using WebStore.Domain.Filters;
 using WebStore.Domain.EntitysDTO;
 using WebStore.Services.Map;
+using Microsoft.Extensions.Logging;
 
 namespace WebStore.Areas.Admin.Controllers
 {
@@ -24,10 +25,12 @@ namespace WebStore.Areas.Admin.Controllers
         private readonly List<SelectListItem> brandList= new List<SelectListItem>();
         private readonly List<SelectListItem> categoryList = new List<SelectListItem>();
         private readonly IHostingEnvironment _appEnvironment;
+        private readonly ILogger<HomeController> log;
 
-        public HomeController(IProductService productService, IHostingEnvironment appEnvironment)
+        public HomeController(IProductService productService, IHostingEnvironment appEnvironment, ILogger<HomeController> log)
         {
             this._appEnvironment = appEnvironment;
+            this.log = log;
             this.productService = productService;
             brandList.Add(new SelectListItem { Text = "", Value = "" });
             categoryList.Add(new SelectListItem { Text = "", Value = "" });
@@ -77,13 +80,15 @@ namespace WebStore.Areas.Admin.Controllers
         }
         public IActionResult Delete(int id)
         {
+            log.LogInformation($"Запрос на удаление продукта с id {id}");
             productService.Delete(id);
-            productService.Commit();
+            //productService.Commit();
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
         public async Task<IActionResult> Edit(EditProductViewModel model)
         {
+            log.LogInformation("Редактирование продукта или добавление нового.");
             if (model.BrandId == 0)
             {
                 ModelState.AddModelError("BrandId", "Нужно выбрать брэнд");
@@ -98,10 +103,12 @@ namespace WebStore.Areas.Admin.Controllers
             }
             if (!ModelState.IsValid)
             {
+                log.LogError($"При запросе на редактирование/добавление продукта передана не валидная модель.");
                 ViewBag.Brands = brandList;
                 ViewBag.Category = categoryList;
                 return View(model);
             }
+            log.LogInformation("Модель для редактирования прошла валидацию.");
             if (model.ImageUrl != null)
             {
                 string path = "/images/shop/" + model.ImageUrl.FileName;
@@ -109,6 +116,7 @@ namespace WebStore.Areas.Admin.Controllers
                 {
                     await model.ImageUrl.CopyToAsync(fileStream);
                 }
+                log.LogInformation($"Изображение товара сохранено на сервер {path}");
                 //FileModel file = new FileModel { Name = uploadedFile.FileName, Path = path };
                 //_context.Files.Add(file);
                 //_context.SaveChanges();
@@ -117,14 +125,11 @@ namespace WebStore.Areas.Admin.Controllers
             {
                 var editProd = productService.GetProductById(model.Id);
                 if (editProd is null)
+                {
+                    log.LogError($"Продукт с идентификатором {model.Id} не найден в БД. Редактирование отменено.");
                     return NotFound();
-                //if (model.ImageUrl != null)
-                //    editProd.ImageUrl = model.ImageUrl.FileName;
-                //editProd.Name = model.Name;
-                //editProd.Order = model.Order;
-                //editProd.Price = model.Price;
-                //editProd.Brand.Id = model.BrandId;
-                //editProd.Category.Id = model.CategoryId;
+                }
+                log.LogInformation($"Продукт с идентификатором {model.Id} найден в БД. Отправлен запрос на редактирование.");
                 productService.UpdateProduct(new ProductDTO
                 {
                     Id = model.Id,
@@ -138,19 +143,18 @@ namespace WebStore.Areas.Admin.Controllers
             }
             else
             {
+                log.LogInformation($"Запрос на добавление нового продукта с именем {model.Name}");
                 productService.AddProduct(new ProductDTO
                 {
                     Brand=new BrandDTO { Id= model.BrandId },
                     Category=new CategoryDTO { Id= model.CategoryId },
-                    //BrandId=model.BrandId,
-                    //CategoryId=model.CategoryId,
                     ImageUrl=model.ImageUrl?.FileName,
                     Name=model.Name,
                     Order=model.Order,
                     Price=model.Price
                 });
             }
-            productService.Commit();
+            //productService.Commit();
             return RedirectToAction("ProductList");
         }
     }
