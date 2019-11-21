@@ -83,7 +83,7 @@ namespace WebStore.Areas.Admin.Controllers
             log.LogInformation($"Запрос на удаление продукта с id {id}");
             productService.Delete(id);
             //productService.Commit();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ProductList));
         }
         [HttpPost]
         public async Task<IActionResult> Edit(EditProductViewModel model)
