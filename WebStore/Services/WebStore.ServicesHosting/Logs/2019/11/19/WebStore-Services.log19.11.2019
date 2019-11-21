@@ -1380,3 +1380,237 @@ INNER JOIN [Categories] AS [p.Category] ON [p].[CategoryId] = [p.Category].[Id]
 INFO  23 2019-11-19 22:38:16,777 [23] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetProducts (WebStore.ServicesHosting) in 6.2289ms
 INFO  23 2019-11-19 22:38:16,777 [23] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetProducts (WebStore.ServicesHosting)'
 INFO  23 2019-11-19 22:38:16,777 [23] ?     - Request finished in 6.7846ms 200 application/json; charset=utf-8
+INFO  27 2019-11-19 22:43:33,425 [27] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/brands  
+INFO  27 2019-11-19 22:43:33,425 [27] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting)'
+INFO  27 2019-11-19 22:43:33,426 [27] ?     - Route matched with {action = "GetBrands", controller = "Product"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[WebStore.Domain.EntitysDTO.BrandDTO] GetBrands() on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  27 2019-11-19 22:43:33,426 [27] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting) - Validation state: Valid
+INFO  27 2019-11-19 22:43:33,426 [27] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.0156ms.
+INFO  27 2019-11-19 22:43:33,426 [27] ?     - Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[WebStore.Domain.Entitys.Brand, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[WebStore.Domain.EntitysDTO.BrandDTO, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+INFO  27 2019-11-19 22:43:33,433 [27] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  27 2019-11-19 22:43:33,441 [27] ?     - Executed DbCommand (6ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[Name], [b].[Order]
+FROM [Brands] AS [b]
+INFO  27 2019-11-19 22:43:33,441 [27] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting) in 15.3071ms
+INFO  27 2019-11-19 22:43:33,441 [27] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting)'
+INFO  27 2019-11-19 22:43:33,441 [27] ?     - Request finished in 16.157ms 200 application/json; charset=utf-8
+INFO  29 2019-11-19 22:43:33,443 [29] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/categoryes  
+INFO  29 2019-11-19 22:43:33,443 [29] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:33,443 [29] ?     - Route matched with {action = "GetCategories", controller = "Product"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[WebStore.Domain.EntitysDTO.CategoryDTO] GetCategories() on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  29 2019-11-19 22:43:33,443 [29] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting) - Validation state: Valid
+INFO  29 2019-11-19 22:43:33,443 [29] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  29 2019-11-19 22:43:33,444 [29] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.4354ms.
+INFO  29 2019-11-19 22:43:33,444 [29] ?     - Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[WebStore.Domain.Entitys.Category, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[WebStore.Domain.EntitysDTO.CategoryDTO, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+INFO  29 2019-11-19 22:43:33,447 [29] ?     - Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [category].[Id], [category].[Name], [category].[Order], [category].[ParentId], [category.ParentCategory].[Id], [category.ParentCategory].[Name], [category.ParentCategory].[Order], [category.ParentCategory].[ParentId]
+FROM [Categories] AS [category]
+LEFT JOIN [Categories] AS [category.ParentCategory] ON [category].[ParentId] = [category.ParentCategory].[Id]
+INFO  29 2019-11-19 22:43:33,449 [29] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting) in 5.572ms
+INFO  29 2019-11-19 22:43:33,449 [29] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:33,449 [29] ?     - Request finished in 6.2163ms 200 application/json; charset=utf-8
+INFO  30 2019-11-19 22:43:33,451 [30] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/2  
+INFO  30 2019-11-19 22:43:33,451 [30] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting)'
+INFO  30 2019-11-19 22:43:33,451 [30] ?     - Route matched with {action = "GetProductById", controller = "Product"}. Executing controller action with signature WebStore.Domain.EntitysDTO.ProductDTO GetProductById(Int32) on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  30 2019-11-19 22:43:33,452 [30] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting) - Validation state: Valid
+INFO  30 2019-11-19 22:43:33,452 [30] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  30 2019-11-19 22:43:33,459 [30] ?     - Executed DbCommand (7ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[BrandId], [p].[CategoryId], [p].[ImageUrl], [p].[Name], [p].[Order], [p].[Price], [p.Brand].[Id], [p.Brand].[Name], [p.Brand].[Order], [p.Category].[Id], [p.Category].[Name], [p.Category].[Order], [p.Category].[ParentId]
+FROM [Products] AS [p]
+INNER JOIN [Brands] AS [p.Brand] ON [p].[BrandId] = [p.Brand].[Id]
+INNER JOIN [Categories] AS [p.Category] ON [p].[CategoryId] = [p.Category].[Id]
+WHERE [p].[Id] = @__id_0
+INFO  30 2019-11-19 22:43:33,460 [30] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 8.2904ms.
+INFO  30 2019-11-19 22:43:33,460 [30] ?     - Executing ObjectResult, writing value of type 'WebStore.Domain.EntitysDTO.ProductDTO'.
+INFO  30 2019-11-19 22:43:33,460 [30] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting) in 8.9609ms
+INFO  30 2019-11-19 22:43:33,460 [30] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting)'
+INFO  30 2019-11-19 22:43:33,460 [30] ?     - Request finished in 9.5544ms 200 application/json; charset=utf-8
+INFO  30 2019-11-19 22:43:36,902 [30] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/brands  
+INFO  30 2019-11-19 22:43:36,903 [30] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting)'
+INFO  30 2019-11-19 22:43:36,903 [30] ?     - Route matched with {action = "GetBrands", controller = "Product"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[WebStore.Domain.EntitysDTO.BrandDTO] GetBrands() on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  30 2019-11-19 22:43:36,904 [30] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting) - Validation state: Valid
+INFO  30 2019-11-19 22:43:36,904 [30] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.0195ms.
+INFO  30 2019-11-19 22:43:36,904 [30] ?     - Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[WebStore.Domain.Entitys.Brand, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[WebStore.Domain.EntitysDTO.BrandDTO, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+INFO  30 2019-11-19 22:43:36,904 [30] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  30 2019-11-19 22:43:36,919 [30] ?     - Executed DbCommand (14ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[Name], [b].[Order]
+FROM [Brands] AS [b]
+INFO  30 2019-11-19 22:43:36,919 [30] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting) in 16.0632ms
+INFO  30 2019-11-19 22:43:36,919 [30] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting)'
+INFO  30 2019-11-19 22:43:36,919 [30] ?     - Request finished in 17.2322ms 200 application/json; charset=utf-8
+INFO  30 2019-11-19 22:43:36,922 [30] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/categoryes  
+INFO  30 2019-11-19 22:43:36,922 [30] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting)'
+INFO  30 2019-11-19 22:43:36,922 [30] ?     - Route matched with {action = "GetCategories", controller = "Product"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[WebStore.Domain.EntitysDTO.CategoryDTO] GetCategories() on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  30 2019-11-19 22:43:36,922 [30] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting) - Validation state: Valid
+INFO  30 2019-11-19 22:43:36,923 [30] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  30 2019-11-19 22:43:36,923 [30] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.5282ms.
+INFO  30 2019-11-19 22:43:36,923 [30] ?     - Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[WebStore.Domain.Entitys.Category, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[WebStore.Domain.EntitysDTO.CategoryDTO, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+INFO  30 2019-11-19 22:43:37,221 [30] ?     - Executed DbCommand (298ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [category].[Id], [category].[Name], [category].[Order], [category].[ParentId], [category.ParentCategory].[Id], [category.ParentCategory].[Name], [category.ParentCategory].[Order], [category.ParentCategory].[ParentId]
+FROM [Categories] AS [category]
+LEFT JOIN [Categories] AS [category.ParentCategory] ON [category].[ParentId] = [category.ParentCategory].[Id]
+INFO  30 2019-11-19 22:43:37,223 [30] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting) in 300.4818ms
+INFO  30 2019-11-19 22:43:37,223 [30] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting)'
+INFO  30 2019-11-19 22:43:37,223 [30] ?     - Request finished in 301.1641ms 200 application/json; charset=utf-8
+INFO  31 2019-11-19 22:43:37,229 [31] ?     - Request starting HTTP/1.1 POST https://localhost:44352/api/products application/json; charset=utf-8 
+INFO  31 2019-11-19 22:43:37,229 [31] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetProducts (WebStore.ServicesHosting)'
+INFO  31 2019-11-19 22:43:37,229 [31] ?     - Route matched with {action = "GetProducts", controller = "Product"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[WebStore.Domain.EntitysDTO.ProductDTO] GetProducts(WebStore.Domain.Filters.ProductFilter) on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  31 2019-11-19 22:43:37,230 [31] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetProducts (WebStore.ServicesHosting) - Validation state: Valid
+INFO  31 2019-11-19 22:43:37,230 [31] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  31 2019-11-19 22:43:37,230 [31] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetProducts (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.4984ms.
+INFO  31 2019-11-19 22:43:37,230 [31] ?     - Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[WebStore.Domain.Entitys.Product, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[WebStore.Domain.EntitysDTO.ProductDTO, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+INFO  31 2019-11-19 22:43:37,433 [31] ?     - Executed DbCommand (202ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [p].[Id], [p].[BrandId], [p].[CategoryId], [p].[ImageUrl], [p].[Name], [p].[Order], [p].[Price], [p.Brand].[Id], [p.Brand].[Name], [p.Brand].[Order], [p.Category].[Id], [p.Category].[Name], [p.Category].[Order], [p.Category].[ParentId]
+FROM [Products] AS [p]
+INNER JOIN [Brands] AS [p.Brand] ON [p].[BrandId] = [p.Brand].[Id]
+INNER JOIN [Categories] AS [p.Category] ON [p].[CategoryId] = [p.Category].[Id]
+INFO  31 2019-11-19 22:43:37,435 [31] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetProducts (WebStore.ServicesHosting) in 206.0527ms
+INFO  31 2019-11-19 22:43:37,435 [31] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetProducts (WebStore.ServicesHosting)'
+INFO  31 2019-11-19 22:43:37,435 [31] ?     - Request finished in 206.6384ms 200 application/json; charset=utf-8
+INFO  29 2019-11-19 22:43:39,438 [29] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/brands  
+INFO  29 2019-11-19 22:43:39,438 [29] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:39,438 [29] ?     - Route matched with {action = "GetBrands", controller = "Product"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[WebStore.Domain.EntitysDTO.BrandDTO] GetBrands() on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  29 2019-11-19 22:43:39,439 [29] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting) - Validation state: Valid
+INFO  29 2019-11-19 22:43:39,439 [29] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.0182ms.
+INFO  29 2019-11-19 22:43:39,439 [29] ?     - Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[WebStore.Domain.Entitys.Brand, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[WebStore.Domain.EntitysDTO.BrandDTO, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+INFO  29 2019-11-19 22:43:39,440 [29] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  29 2019-11-19 22:43:39,688 [29] ?     - Executed DbCommand (248ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[Name], [b].[Order]
+FROM [Brands] AS [b]
+INFO  29 2019-11-19 22:43:39,688 [29] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting) in 249.8879ms
+INFO  29 2019-11-19 22:43:39,689 [29] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:39,689 [29] ?     - Request finished in 250.9735ms 200 application/json; charset=utf-8
+INFO  29 2019-11-19 22:43:39,690 [29] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/categoryes  
+INFO  29 2019-11-19 22:43:39,691 [29] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:39,691 [29] ?     - Route matched with {action = "GetCategories", controller = "Product"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[WebStore.Domain.EntitysDTO.CategoryDTO] GetCategories() on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  29 2019-11-19 22:43:39,692 [29] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting) - Validation state: Valid
+INFO  29 2019-11-19 22:43:39,692 [29] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  29 2019-11-19 22:43:39,692 [29] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.5289ms.
+INFO  29 2019-11-19 22:43:39,692 [29] ?     - Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[WebStore.Domain.Entitys.Category, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[WebStore.Domain.EntitysDTO.CategoryDTO, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+INFO  29 2019-11-19 22:43:39,983 [29] ?     - Executed DbCommand (291ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [category].[Id], [category].[Name], [category].[Order], [category].[ParentId], [category.ParentCategory].[Id], [category.ParentCategory].[Name], [category.ParentCategory].[Order], [category.ParentCategory].[ParentId]
+FROM [Categories] AS [category]
+LEFT JOIN [Categories] AS [category.ParentCategory] ON [category].[ParentId] = [category.ParentCategory].[Id]
+INFO  29 2019-11-19 22:43:39,985 [29] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting) in 293.3813ms
+INFO  29 2019-11-19 22:43:39,985 [29] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:39,985 [29] ?     - Request finished in 294.5659ms 200 application/json; charset=utf-8
+INFO  29 2019-11-19 22:43:39,986 [29] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/1  
+INFO  29 2019-11-19 22:43:39,987 [29] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:39,987 [29] ?     - Route matched with {action = "GetProductById", controller = "Product"}. Executing controller action with signature WebStore.Domain.EntitysDTO.ProductDTO GetProductById(Int32) on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  29 2019-11-19 22:43:39,987 [29] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting) - Validation state: Valid
+INFO  29 2019-11-19 22:43:39,988 [29] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  29 2019-11-19 22:43:40,095 [29] ?     - Executed DbCommand (106ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[BrandId], [p].[CategoryId], [p].[ImageUrl], [p].[Name], [p].[Order], [p].[Price], [p.Brand].[Id], [p.Brand].[Name], [p.Brand].[Order], [p.Category].[Id], [p.Category].[Name], [p.Category].[Order], [p.Category].[ParentId]
+FROM [Products] AS [p]
+INNER JOIN [Brands] AS [p.Brand] ON [p].[BrandId] = [p.Brand].[Id]
+INNER JOIN [Categories] AS [p.Category] ON [p].[CategoryId] = [p.Category].[Id]
+WHERE [p].[Id] = @__id_0
+INFO  29 2019-11-19 22:43:40,095 [29] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 107.5234ms.
+INFO  29 2019-11-19 22:43:40,095 [29] ?     - Executing ObjectResult, writing value of type 'WebStore.Domain.EntitysDTO.ProductDTO'.
+INFO  29 2019-11-19 22:43:40,095 [29] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting) in 108.1986ms
+INFO  29 2019-11-19 22:43:40,095 [29] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:40,096 [29] ?     - Request finished in 109.2762ms 200 application/json; charset=utf-8
+INFO  29 2019-11-19 22:43:49,345 [29] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/brands  
+INFO  29 2019-11-19 22:43:49,345 [29] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:49,346 [29] ?     - Route matched with {action = "GetBrands", controller = "Product"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[WebStore.Domain.EntitysDTO.BrandDTO] GetBrands() on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  29 2019-11-19 22:43:49,346 [29] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting) - Validation state: Valid
+INFO  29 2019-11-19 22:43:49,346 [29] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.0066ms.
+INFO  29 2019-11-19 22:43:49,346 [29] ?     - Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[WebStore.Domain.Entitys.Brand, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[WebStore.Domain.EntitysDTO.BrandDTO, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+INFO  29 2019-11-19 22:43:49,346 [29] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  29 2019-11-19 22:43:49,381 [29] ?     - Executed DbCommand (35ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[Name], [b].[Order]
+FROM [Brands] AS [b]
+INFO  29 2019-11-19 22:43:49,382 [29] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting) in 36.0451ms
+INFO  29 2019-11-19 22:43:49,382 [29] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:49,382 [29] ?     - Request finished in 36.6739ms 200 application/json; charset=utf-8
+INFO  29 2019-11-19 22:43:49,383 [29] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/categoryes  
+INFO  29 2019-11-19 22:43:49,383 [29] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:49,383 [29] ?     - Route matched with {action = "GetCategories", controller = "Product"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[WebStore.Domain.EntitysDTO.CategoryDTO] GetCategories() on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  29 2019-11-19 22:43:49,384 [29] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting) - Validation state: Valid
+INFO  29 2019-11-19 22:43:49,384 [29] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  29 2019-11-19 22:43:49,384 [29] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.5823ms.
+INFO  29 2019-11-19 22:43:49,384 [29] ?     - Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[WebStore.Domain.Entitys.Category, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[WebStore.Domain.EntitysDTO.CategoryDTO, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+INFO  29 2019-11-19 22:43:49,388 [29] ?     - Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [category].[Id], [category].[Name], [category].[Order], [category].[ParentId], [category.ParentCategory].[Id], [category.ParentCategory].[Name], [category.ParentCategory].[Order], [category.ParentCategory].[ParentId]
+FROM [Categories] AS [category]
+LEFT JOIN [Categories] AS [category.ParentCategory] ON [category].[ParentId] = [category.ParentCategory].[Id]
+INFO  29 2019-11-19 22:43:49,389 [29] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting) in 5.6581ms
+INFO  29 2019-11-19 22:43:49,389 [29] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:49,389 [29] ?     - Request finished in 6.3155ms 200 application/json; charset=utf-8
+INFO  29 2019-11-19 22:43:49,392 [29] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/1  
+INFO  29 2019-11-19 22:43:49,392 [29] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:49,392 [29] ?     - Route matched with {action = "GetProductById", controller = "Product"}. Executing controller action with signature WebStore.Domain.EntitysDTO.ProductDTO GetProductById(Int32) on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  29 2019-11-19 22:43:49,392 [29] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting) - Validation state: Valid
+INFO  29 2019-11-19 22:43:49,393 [29] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  29 2019-11-19 22:43:49,398 [29] ?     - Executed DbCommand (5ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[BrandId], [p].[CategoryId], [p].[ImageUrl], [p].[Name], [p].[Order], [p].[Price], [p.Brand].[Id], [p.Brand].[Name], [p.Brand].[Order], [p.Category].[Id], [p.Category].[Name], [p.Category].[Order], [p.Category].[ParentId]
+FROM [Products] AS [p]
+INNER JOIN [Brands] AS [p.Brand] ON [p].[BrandId] = [p.Brand].[Id]
+INNER JOIN [Categories] AS [p.Category] ON [p].[CategoryId] = [p.Category].[Id]
+WHERE [p].[Id] = @__id_0
+INFO  29 2019-11-19 22:43:49,399 [29] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 6.3328ms.
+INFO  29 2019-11-19 22:43:49,399 [29] ?     - Executing ObjectResult, writing value of type 'WebStore.Domain.EntitysDTO.ProductDTO'.
+INFO  29 2019-11-19 22:43:49,399 [29] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting) in 6.8538ms
+INFO  29 2019-11-19 22:43:49,399 [29] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetProductById (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:49,399 [29] ?     - Request finished in 7.628ms 200 application/json; charset=utf-8
+INFO  29 2019-11-19 22:43:49,411 [29] ?     - Request starting HTTP/1.1 PUT https://localhost:44352/api/products application/json; charset=utf-8 
+INFO  29 2019-11-19 22:43:49,412 [29] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.UpdateProduct (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:49,412 [29] ?     - Route matched with {action = "UpdateProduct", controller = "Product"}. Executing controller action with signature Void UpdateProduct(WebStore.Domain.EntitysDTO.ProductDTO) on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  29 2019-11-19 22:43:49,412 [29] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.UpdateProduct (WebStore.ServicesHosting) - Validation state: Valid
+INFO  29 2019-11-19 22:43:49,412 [29] ?     - Редактировние данных продукта Id - 1, имя - Easy Polo Black Star Edition
+INFO  29 2019-11-19 22:43:49,413 [29] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  29 2019-11-19 22:43:49,415 [29] ?     - Executed DbCommand (1ms) [Parameters=[@__item_Id_0='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SELECT TOP(1) [p].[Id], [p].[BrandId], [p].[CategoryId], [p].[ImageUrl], [p].[Name], [p].[Order], [p].[Price]
+FROM [Products] AS [p]
+WHERE [p].[Id] = @__item_Id_0
+INFO  29 2019-11-19 22:43:49,415 [29] ?     - Обновление данных о продукте ИД: 1, Имя: Easy Polo Black Star Edition.
+INFO  29 2019-11-19 22:43:49,441 [29] ?     - Executed DbCommand (25ms) [Parameters=[@p2='?' (DbType = Int32), @p0='?' (DbType = Int32), @p1='?' (DbType = Int32)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+UPDATE [Products] SET [BrandId] = @p0, [CategoryId] = @p1
+WHERE [Id] = @p2;
+SELECT @@ROWCOUNT;
+INFO  29 2019-11-19 22:43:49,442 [29] ?     - Обновление данных продукта с именем Easy Polo Black Star Edition прошло успешно. ИД: 1
+INFO  29 2019-11-19 22:43:49,442 [29] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.UpdateProduct (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.EmptyResult in 29.5831ms.
+INFO  29 2019-11-19 22:43:49,442 [29] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.UpdateProduct (WebStore.ServicesHosting) in 30.2944ms
+INFO  29 2019-11-19 22:43:49,442 [29] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.UpdateProduct (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:49,442 [29] ?     - Request finished in 30.9559ms 200 
+INFO  32 2019-11-19 22:43:49,517 [32] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/brands  
+INFO  32 2019-11-19 22:43:49,517 [32] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting)'
+INFO  32 2019-11-19 22:43:49,517 [32] ?     - Route matched with {action = "GetBrands", controller = "Product"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[WebStore.Domain.EntitysDTO.BrandDTO] GetBrands() on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  32 2019-11-19 22:43:49,517 [32] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting) - Validation state: Valid
+INFO  32 2019-11-19 22:43:49,517 [32] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.0074ms.
+INFO  32 2019-11-19 22:43:49,517 [32] ?     - Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[WebStore.Domain.Entitys.Brand, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[WebStore.Domain.EntitysDTO.BrandDTO, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+INFO  32 2019-11-19 22:43:49,518 [32] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  32 2019-11-19 22:43:49,518 [32] ?     - Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [b].[Id], [b].[Name], [b].[Order]
+FROM [Brands] AS [b]
+INFO  32 2019-11-19 22:43:49,519 [32] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting) in 1.8132ms
+INFO  32 2019-11-19 22:43:49,519 [32] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetBrands (WebStore.ServicesHosting)'
+INFO  32 2019-11-19 22:43:49,519 [32] ?     - Request finished in 2.5076ms 200 application/json; charset=utf-8
+INFO  29 2019-11-19 22:43:49,520 [29] ?     - Request starting HTTP/1.1 GET https://localhost:44352/api/products/categoryes  
+INFO  29 2019-11-19 22:43:49,520 [29] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:49,520 [29] ?     - Route matched with {action = "GetCategories", controller = "Product"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[WebStore.Domain.EntitysDTO.CategoryDTO] GetCategories() on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  29 2019-11-19 22:43:49,520 [29] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting) - Validation state: Valid
+INFO  29 2019-11-19 22:43:49,521 [29] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  29 2019-11-19 22:43:49,521 [29] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.3731ms.
+INFO  29 2019-11-19 22:43:49,521 [29] ?     - Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[WebStore.Domain.Entitys.Category, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[WebStore.Domain.EntitysDTO.CategoryDTO, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+INFO  29 2019-11-19 22:43:49,522 [29] ?     - Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [category].[Id], [category].[Name], [category].[Order], [category].[ParentId], [category.ParentCategory].[Id], [category.ParentCategory].[Name], [category.ParentCategory].[Order], [category.ParentCategory].[ParentId]
+FROM [Categories] AS [category]
+LEFT JOIN [Categories] AS [category.ParentCategory] ON [category].[ParentId] = [category.ParentCategory].[Id]
+INFO  29 2019-11-19 22:43:49,523 [29] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting) in 2.6996ms
+INFO  29 2019-11-19 22:43:49,523 [29] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetCategories (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:49,523 [29] ?     - Request finished in 3.2266ms 200 application/json; charset=utf-8
+INFO  29 2019-11-19 22:43:49,528 [29] ?     - Request starting HTTP/1.1 POST https://localhost:44352/api/products application/json; charset=utf-8 
+INFO  29 2019-11-19 22:43:49,528 [29] ?     - Executing endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetProducts (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:49,528 [29] ?     - Route matched with {action = "GetProducts", controller = "Product"}. Executing controller action with signature System.Collections.Generic.IEnumerable`1[WebStore.Domain.EntitysDTO.ProductDTO] GetProducts(WebStore.Domain.Filters.ProductFilter) on controller WebStore.ServicesHosting.Controllers.ProductController (WebStore.ServicesHosting).
+INFO  29 2019-11-19 22:43:49,528 [29] ?     - Executing action method WebStore.ServicesHosting.Controllers.ProductController.GetProducts (WebStore.ServicesHosting) - Validation state: Valid
+INFO  29 2019-11-19 22:43:49,529 [29] ?     - Entity Framework Core 2.2.6-servicing-10079 initialized 'WebStoreContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+INFO  29 2019-11-19 22:43:49,529 [29] ?     - Executed action method WebStore.ServicesHosting.Controllers.ProductController.GetProducts (WebStore.ServicesHosting), returned result Microsoft.AspNetCore.Mvc.ObjectResult in 0.3888ms.
+INFO  29 2019-11-19 22:43:49,529 [29] ?     - Executing ObjectResult, writing value of type 'System.Linq.Enumerable+SelectEnumerableIterator`2[[WebStore.Domain.Entitys.Product, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[WebStore.Domain.EntitysDTO.ProductDTO, WebStore.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+INFO  29 2019-11-19 22:43:49,533 [29] ?     - Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+SELECT [p].[Id], [p].[BrandId], [p].[CategoryId], [p].[ImageUrl], [p].[Name], [p].[Order], [p].[Price], [p.Brand].[Id], [p.Brand].[Name], [p.Brand].[Order], [p.Category].[Id], [p.Category].[Name], [p.Category].[Order], [p.Category].[ParentId]
+FROM [Products] AS [p]
+INNER JOIN [Brands] AS [p.Brand] ON [p].[BrandId] = [p.Brand].[Id]
+INNER JOIN [Categories] AS [p.Category] ON [p].[CategoryId] = [p.Category].[Id]
+INFO  29 2019-11-19 22:43:49,534 [29] ?     - Executed action WebStore.ServicesHosting.Controllers.ProductController.GetProducts (WebStore.ServicesHosting) in 6.0707ms
+INFO  29 2019-11-19 22:43:49,534 [29] ?     - Executed endpoint 'WebStore.ServicesHosting.Controllers.ProductController.GetProducts (WebStore.ServicesHosting)'
+INFO  29 2019-11-19 22:43:49,535 [29] ?     - Request finished in 6.7316ms 200 application/json; charset=utf-8

@@ -16,6 +16,7 @@ using WebStore.Interfaces.Api;
 using WebStore.Interfaces.Services;
 using WebStore.Services.Services;
 using WebStore.Logging;
+using WebStore.Infrastructure;
 
 
 namespace WebStore
@@ -79,8 +80,10 @@ namespace WebStore
             {
                 app.UseDeveloperExceptionPage();
             }
+            
             app.UseStaticFiles();
             app.UseAuthentication();
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

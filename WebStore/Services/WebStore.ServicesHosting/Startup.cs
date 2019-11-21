@@ -19,6 +19,7 @@ using WebStore.Domain.Entitys;
 using WebStore.Interfaces.Services;
 using WebStore.Services.Services;
 using WebStore.Logging;
+using WebStore.ServiceHosting.Infrastructure;
 
 namespace WebStore.ServicesHosting
 {
@@ -81,6 +82,7 @@ namespace WebStore.ServicesHosting
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseSwagger();
             app.UseSwaggerUI(
                 opt =>
