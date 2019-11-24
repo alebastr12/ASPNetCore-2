@@ -53,7 +53,9 @@ namespace WebStore.Services.Services
 
         public void RemoveAll()
         {
-            Cart = new Cart { Items = new List<CartItem>() };
+            var cart = Cart;
+            cart.Items.Clear();
+            Cart = cart;
         }
 
         public void RemoveFromCart(int id)
