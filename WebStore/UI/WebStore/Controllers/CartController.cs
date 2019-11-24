@@ -29,6 +29,7 @@ namespace WebStore.Controllers
         public IActionResult Details()
         {
             User user = userManager.GetUserAsync(User).Result;
+            
             var model = new OrderDetailsViewModel
             {
                 Cart = cartService.TransformCart(),
