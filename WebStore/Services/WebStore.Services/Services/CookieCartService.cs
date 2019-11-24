@@ -12,92 +12,19 @@ namespace WebStore.Services.Services
 {
     public class CookieCartService : ICartService
     {
-        private readonly IHttpContextAccessor contextAccessor;
+        
         private readonly IProductService productService;
+        private readonly ICartStore cartStore;
         private readonly string cartName;
 
         private Cart Cart
         {
-            get
-            {
-                var cookie = contextAccessor
-                                .HttpContext
-                                .Request
-                                .Cookies[cartName];
-                string json = string.Empty;
-                Cart cart = null;
-
-                if (cookie == null)
-                {
-                    cart = new Cart { Items = new List<CartItem>() };
-                    json = JsonConvert.SerializeObject(cart);
-
-                    contextAccessor
-                          .HttpContext
-                          .Response
-                          .Cookies
-                          .Append(
-                             cartName,
-                             json,
-                             new CookieOptions
-                             {
-                                 Expires = DateTime.Now.AddDays(1)
-                             });
-                    return cart;
-                }
-
-                json = cookie;
-                cart = JsonConvert.DeserializeObject<Cart>(json);
-
-                contextAccessor
-                      .HttpContext
-                      .Response
-                      .Cookies
-                      .Delete(cartName);
-
-                contextAccessor
-                      .HttpContext
-                      .Response
-                      .Cookies
-                      .Append(
-                          cartName,
-                          json,
-                          new CookieOptions()
-                          {
-                              Expires = DateTime.Now.AddDays(1)
-                          });
-
-                return cart;
-            }
-
-            set
-            {
-                var json = JsonConvert.SerializeObject(value);
-
-                contextAccessor
-                      .HttpContext
-                      .Response
-                      .Cookies
-                      .Delete(cartName);
-                contextAccessor
-                      .HttpContext
-                      .Response
-                      .Cookies
-                      .Append(
-                           cartName,
-                           json,
-                           new CookieOptions()
-                           {
-                               Expires = DateTime.Now.AddDays(1)
-                           });
-            }
+            get => cartStore.Cart; set => cartStore.Cart = value;
         }
-        public CookieCartService(IHttpContextAccessor contextAccessor, IProductService productService)
+        public CookieCartService(IProductService ProductData, ICartStore CartStore)
         {
-            this.contextAccessor = contextAccessor;
-            this.productService = productService;
-            cartName = contextAccessor.HttpContext.User.Identity.IsAuthenticated
-                ? contextAccessor.HttpContext.User.Identity.Name : "";
+            productService = ProductData;
+            cartStore = CartStore;
         }
         public void AddToCart(int id)
         {

@@ -68,6 +68,7 @@ namespace WebStore
             services.AddSingleton<IEmployeeService, EmployeeClient>();
             services.AddScoped<IProductService, ProductClient>();
             services.AddScoped<ICartService, CookieCartService>();
+            services.AddScoped<ICartStore, CokieCartStore>();
             services.AddScoped<IOrderService, OrderClient>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
