@@ -48,7 +48,8 @@ namespace WebStore.Controllers
                     ImageUrl = p.ImageUrl,
                     Name = p.Name,
                     Order = p.Order,
-                    Price = p.Price
+                    Price = p.Price,
+                    BrandName=p.Brand.Name
                 }).OrderBy(p => p.Order).ToList()
             };
 

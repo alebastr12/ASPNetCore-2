@@ -20,26 +20,34 @@ namespace WebStore.Controllers
         {
             return View();
         }
-        public IActionResult Cart()
-        {
-            return View();
-        }
-        public IActionResult Checkout()
-        {
-            return View();
-        }
+        //public IActionResult Cart()
+        //{
+        //    return View();
+        //}
+        //public IActionResult Checkout()
+        //{
+        //    return View();
+        //}
         public IActionResult Contact()
         {
             return View();
         }
-        public IActionResult Login()
+        //public IActionResult Login()
+        //{
+        //    return View();
+        //}
+
+        public IActionResult Error404()
         {
             return View();
         }
-        
-        public IActionResult Error()
+        public IActionResult ErrorStatus(string id)
         {
-            return View();
+            switch (id)
+            {
+                case "404": return RedirectToAction(nameof(Error404));
+                default: return Content($"Статусный код ошибки {id}");
+            }
         }
     }
 }
