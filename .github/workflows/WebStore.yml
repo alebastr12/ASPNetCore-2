@@ -39,7 +39,7 @@ jobs:
     - name: Build with dotnet
       run: dotnet build --configuration Release WebStore/UI/WebStore/WebStore.csproj
 
-    - uses: actions/uploader-artifact@master
+    - uses: actions/upload-artifact@master
       with:
         name: release-webstore-${{ matrix.os }}
         path: WebStore/UI/WebStore/bin/Release
@@ -60,7 +60,7 @@ jobs:
     - name: Build with dotnet
       run: dotnet build --configuration Release WebStore/Services/WebStore.ServiceHosting/WebStore.ServiceHosting.csproj
 
-    - uses: actions/uploader-artifact@master
+    - uses: actions/upload-artifact@master
       with:
-        name: release-webstore-${{ matrix.os }}
+        name: release-web-api-${{ matrix.os }}
         path: WebStore/Services/WebStore.ServiceHosting/bin/Release
