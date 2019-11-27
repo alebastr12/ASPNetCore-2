@@ -2,9 +2,9 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 <div class="left-sidebar">
-    @await Component.InvokeAsync("Categories");
+    @await Component.InvokeAsync("Categories",new { CategoryId = Context.Request.Query["CategoryId"].ToString() });
 
-    @await Component.InvokeAsync("Brands");
+    @await Component.InvokeAsync("Brands",new { BrandId = Context.Request.Query["BrandId"].ToString() });
 
     <div class="price-range">
         <!--price-range-->

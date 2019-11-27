@@ -16,13 +16,21 @@ namespace WebStore.ViewComponents
         {
             _productService = iproductservice;
         }
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string CategoryId)
         {
-            var Categories = GetCategories();
-            return View(Categories);
+            var current_section_id = int.TryParse(CategoryId, out var Id) ? Id : (int?)null;
+            var Categories = GetCategories(current_section_id, out int? ParrentId);
+            return View(new CategoryCompleteViewModel
+            {
+                Categories = Categories,
+                CurrentParrentCategory=ParrentId,
+                CurrentcategoryId= current_section_id
+            });
+           
         }
-        private List<CategoryViewModel> GetCategories()
+        private List<CategoryViewModel> GetCategories(int? CurrentId, out int? ParrentId)
         {
+            ParrentId = null;
             var categories = _productService.GetCategories();
             // получим и заполним родительские категории
             var parentSections = categories.Where(p => (p.ParentCategory is null)).ToArray();
@@ -43,6 +51,8 @@ namespace WebStore.ViewComponents
                 var childCategories = categories.Where(c => c.ParentCategory?.Id == CategoryViewModel.Id);
                 foreach (var childCategory in childCategories)
                 {
+                    if (childCategory.Id == CurrentId)
+                        ParrentId = CategoryViewModel.Id;
                     CategoryViewModel.ChildCategories.Add(new CategoryViewModel()
                     {
                         Id = childCategory.Id,
