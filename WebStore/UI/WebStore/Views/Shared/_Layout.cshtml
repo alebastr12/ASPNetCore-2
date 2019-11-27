@@ -111,7 +111,7 @@
                             <ul class="nav navbar-nav collapse navbar-collapse">
                                 <li><a is-active-route asp-controller="Home" asp-action="Index">Home</a></li>
                                 <li class="dropdown">
-                                    <a is-active-route asp-controller="Catalog" asp-action="Shop">Shop<i class="fa fa-angle-down"></i></a>
+                                    <a is-active-route is-ignore-action asp-controller="Catalog" asp-action="Shop">Shop<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a is-active-route asp-controller="Catalog" asp-action="Shop">Products</a></li>
                                         @*<li><a asp-controller="Catalog" asp-action="ProductDetails">Product Details</a></li>*@
@@ -121,7 +121,7 @@
                                     </ul>
                                 </li>
                                 <li class="dropdown">
-                                    <a is-active-route asp-controller="Home" asp-action="Blog">Blog<i class="fa fa-angle-down"></i></a>
+                                    <a is-active-route is-ignore-action asp-controller="Home" asp-action="Blog">Blog<i class="fa fa-angle-down"></i></a>
                                     <ul role="menu" class="sub-menu">
                                         <li><a is-active-route asp-controller="Home" asp-action="Blog">Blog List</a></li>
                                         <li><a is-active-route asp-controller="Home" asp-action="BlogSingle">Blog Single</a></li>
