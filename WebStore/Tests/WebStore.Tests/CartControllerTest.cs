@@ -127,7 +127,7 @@ namespace WebStore.Tests
             string expected_phone = "1234";
             user_manager_mock
                 .Setup(u => u.GetUserAsync(It.IsAny<ClaimsPrincipal>()))
-                .Returns<ClaimsPrincipal>(user =>                 
+                .Returns<ClaimsPrincipal>(u =>                 
                     Task.FromResult(new User { UserName = "User" })
                 );
             user_manager_mock
