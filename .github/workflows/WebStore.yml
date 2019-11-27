@@ -1,30 +1,27 @@
-name: ASP.NET Core Build
+name: ASP.NET Core CI
 
-on:
-  push:
-    branches: 
-      - master
+on: [push]
 
 jobs:
-  tests:
+  test:
     name: Test on .NET Core for ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macOS-latest]
-    steps:
-      - uses: actions/checkout@v1
-      - name: Use .NET 2.2.108
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 2.2.108 
-      - name: dotnet build and test
-        run: |
-          dotnet build --configuration Debug
-          dotnet test        
-     
-  build-webstore:
 
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use .NET 2.2.108
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+    - name: dotnet build and test
+      run: |
+        dotnet build --configuration Debug
+        dotnet test
+        
+  publish-webstore:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -37,15 +34,14 @@ jobs:
       with:
         dotnet-version: 2.2.108
     - name: Build with dotnet
-      run: dotnet build --configuration Release WebStore/UI/WebStore/WebStore.csproj
-
+      run: dotnet publish --configuration Release WebStore/UI/WebStore/WebStore.csproj
+    
     - uses: actions/upload-artifact@master
       with:
-        name: release-webstore-${{ matrix.os }}
-        path: WebStore/UI/WebStore/bin/Release
+        name: webstore-${{ matrix.os }}
+        path: WebStore/UI/WebStore/bin/Release/netcoreapp2.2/publish
 
-  build-web-api:
-
+  build-api:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -58,9 +54,9 @@ jobs:
       with:
         dotnet-version: 2.2.108
     - name: Build with dotnet
-      run: dotnet build --configuration Release WebStore/Services/WebStore.ServicesHosting/WebStore.ServicesHosting.csproj
-
+      run: dotnet publish --configuration Release WebStore/Services/WebStore.ServicesHosting/WebStore.ServicesHosting.csproj
+    
     - uses: actions/upload-artifact@master
       with:
-        name: release-web-api-${{ matrix.os }}
-        path: WebStore/Services/WebStore.ServicesHosting/bin/Release
+        name: webstore-api-${{ matrix.os }}
+        path: WebStore/Services/WebStore.ServiceHosting/bin/Release/netcoreapp2.2/publish
