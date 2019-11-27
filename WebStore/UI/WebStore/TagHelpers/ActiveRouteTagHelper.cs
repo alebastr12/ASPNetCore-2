@@ -60,8 +60,8 @@ namespace WebStore.TagHelpers
                 return false;
             if (!string.IsNullOrWhiteSpace(Controller) && !string.Equals(Controller, current_controller, StringComparison.OrdinalIgnoreCase))
                 return false;
-            foreach (var (key, value) in RouteData)
-                if (!route_data.ContainsKey(key) || route_data[key].ToString() != value)
+            foreach (var item in RouteData)
+                if (!route_data.ContainsKey(item.Key) || route_data[item.Key].ToString() != item.Value)
                     return false;
             return true;
         }
