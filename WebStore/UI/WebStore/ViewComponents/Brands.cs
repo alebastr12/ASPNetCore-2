@@ -17,21 +17,23 @@ namespace WebStore.ViewComponents
         {
             _productService = productService;
         }
-        public async Task<IViewComponentResult> InvokeAsync()
+        public async Task<IViewComponentResult> InvokeAsync(string BrandId)
         {
-            var brands = GetBrands();
             
-            return View(brands);
+            return View(new BrandCompleteViewModel
+            {
+                Brands = GetBrands(),
+                CurrentBrandId = int.TryParse(BrandId, out var Id)?Id:(int?)null
+            });
         }
 
-        private object GetBrands()
+        private IEnumerable<BrandViewModel> GetBrands()
         {
             return _productService.GetBrands().Select(b => new BrandViewModel
             {
                 Id = b.Id,
                 Name = b.Name,
                 Order = b.Order,
-                //ProductCount = b.Products?.Count() ?? 0
                 ProductCount = _productService.GetProducts(new ProductFilter { BrandId = b.Id, CategoryId = null }).Count()
             }).OrderBy(b => b.Order).ToList();
             
