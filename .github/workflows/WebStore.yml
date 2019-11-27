@@ -58,9 +58,9 @@ jobs:
       with:
         dotnet-version: 2.2.108
     - name: Build with dotnet
-      run: dotnet build --configuration Release WebStore/Services/WebStore.ServiceHosting/WebStore.ServiceHosting.csproj
+      run: dotnet build --configuration Release WebStore/Services/WebStore.ServicesHosting/WebStore.ServicesHosting.csproj
 
     - uses: actions/upload-artifact@master
       with:
         name: release-web-api-${{ matrix.os }}
-        path: WebStore/Services/WebStore.ServiceHosting/bin/Release
+        path: WebStore/Services/WebStore.ServicesHosting/bin/Release
