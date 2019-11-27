@@ -66,6 +66,14 @@ namespace WebStore.ServicesHosting.Controllers
                 
         }
         /// <summary>
+        /// Получить брэнд по его идентификатору
+        /// </summary>
+        /// <param name="Id">Идентификатор бренда</param>
+        /// <returns>Брэнд</returns>
+        [HttpGet("brands/{Id}")]
+        public BrandDTO GetBrandById(int Id) => productService.GetBrandById(Id);
+
+        /// <summary>
         /// Получить список брэндов
         /// </summary>
         /// <returns>Список всех брэндов</returns>
@@ -77,6 +85,14 @@ namespace WebStore.ServicesHosting.Controllers
         /// <returns>Список всех категорий</returns>
         [HttpGet("categoryes")]
         public IEnumerable<CategoryDTO> GetCategories() => productService.GetCategories();
+        /// <summary>
+        /// Получить категорию по ее идентификатору
+        /// </summary>
+        /// <param name="Id">Идетификатор категории</param>
+        /// <returns>Категория</returns>
+        [HttpGet("categoryes/{Id}")]
+        public CategoryDTO GetCategoryById(int Id) => productService.GetCategoryById(Id);
+
         /// <summary>
         /// Получить продукт по его идентификатору
         /// </summary>

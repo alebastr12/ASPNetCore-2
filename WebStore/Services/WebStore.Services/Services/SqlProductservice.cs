@@ -79,6 +79,11 @@ namespace WebStore.Services.Services
             
         }
 
+        public BrandDTO GetBrandById(int Id)
+        {
+            return _context.Brands.FirstOrDefault(b => b.Id == Id).ToDTO();
+        }
+
         public IEnumerable<BrandDTO> GetBrands()
         {
             return _context.Brands.AsEnumerable().Select(BrandMapper.ToDTO);
@@ -92,6 +97,12 @@ namespace WebStore.Services.Services
                 .Select(CategoryMapper.ToDTO);
             return cat;
         }
+
+        public CategoryDTO GetCategoryById(int Id)
+        {
+            return _context.Categories.FirstOrDefault(b => b.Id == Id).ToDTO();
+        }
+
         public ProductDTO GetProductById(int id)
         {
             return _context.Products

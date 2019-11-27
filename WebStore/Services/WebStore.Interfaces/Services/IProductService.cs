@@ -11,7 +11,9 @@ namespace WebStore.Interfaces.Services
     public interface IProductService
     {
         IEnumerable<CategoryDTO> GetCategories();
+        CategoryDTO GetCategoryById(int Id);
         IEnumerable<BrandDTO> GetBrands();
+        BrandDTO GetBrandById(int Id);
         IEnumerable<ProductDTO> GetProducts(ProductFilter filter);
         ProductDTO GetProductById(int id);
         void Delete(int? id);
