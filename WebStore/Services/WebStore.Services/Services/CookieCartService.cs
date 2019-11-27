@@ -15,7 +15,7 @@ namespace WebStore.Services.Services
         
         private readonly IProductService productService;
         private readonly ICartStore cartStore;
-        private readonly string cartName;
+        //private readonly string cartName;
 
         private Cart Cart
         {
@@ -69,9 +69,11 @@ namespace WebStore.Services.Services
 
         public CartViewModel TransformCart()
         {
+            if (Cart.Items is null)
+                return new CartViewModel { Items=new Dictionary<ProductViewModel, int>() };
             var products = productService.GetProducts(new ProductFilter
             {
-                Ids = Cart.Items.Select(c => c.ProductId).ToList()
+                Ids = Cart.Items?.Select(c => c.ProductId).ToList()
             }).Select(p => new ProductViewModel
             {
                 Id = p.Id,
@@ -83,7 +85,7 @@ namespace WebStore.Services.Services
             }).ToList();
             var r = new CartViewModel
             {
-                Items = Cart.Items.ToDictionary(x => products.First(y => y.Id == x.ProductId),
+                Items = Cart.Items?.ToDictionary(x => products.First(y => y.Id == x.ProductId),
                 x => x.Quantity)
             };
             return r;

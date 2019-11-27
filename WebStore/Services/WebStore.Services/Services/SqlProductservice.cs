@@ -104,6 +104,10 @@ namespace WebStore.Services.Services
         public IEnumerable<ProductDTO> GetProducts(ProductFilter filter)
         {
             var dbItems = _context.Products.Include(p=>p.Category).Include(p=>p.Brand).AsQueryable();
+            if (filter.Ids?.Count > 0)
+            {
+                dbItems = dbItems.Where(p => filter.Ids.Contains(p.Id));
+            }
             if (filter.BrandId.HasValue)
             {
                 dbItems = dbItems.Where(p => p.BrandId == filter.BrandId);
