@@ -36,10 +36,9 @@
         else
         {
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title ">
-                        <a @(parentCategory.Id == Model.CurrentcategoryId ? "class=active" : null) asp-controller="Catalog" asp-action="Shop" asp-route-CategoryId="@parentCategory.Id" 
-                           >
+                <div class="panel-heading" >
+                    <h4 class="panel-title" @(parentCategory.Id == Model.CurrentcategoryId ? "style=\"text-decoration:solid\"" : null)>
+                        <a asp-controller="Catalog" asp-action="Shop" asp-route-CategoryId="@parentCategory.Id">
                             @parentCategory.Name
                         </a>
                     </h4>
