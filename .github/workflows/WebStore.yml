@@ -1,0 +1,66 @@
+name: ASP.NET Core Build
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  tests:
+    name: Test on .NET Core for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use .NET 2.2.108
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 2.2.108 
+      - name: dotnet build and test
+        run: |
+          dotnet build --configuration Debug
+          dotnet test        
+     
+  build-webstore:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+    - name: Build with dotnet
+      run: dotnet build --configuration Release WebStore/UI/WebStore/WebStore.csproj
+
+    - uses: actions/uploader-artifact@master
+      with:
+        name: release-webstore-${{ matrix.os }}
+        path: WebStore/UI/WebStore/bin/Release
+
+  build-web-api:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 2.2.108
+    - name: Build with dotnet
+      run: dotnet build --configuration Release WebStore/Services/WebStore.ServiceHosting/WebStore.ServiceHosting.csproj
+
+    - uses: actions/uploader-artifact@master
+      with:
+        name: release-webstore-${{ matrix.os }}
+        path: WebStore/Services/WebStore.ServiceHosting/bin/Release
