@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Domain.Entitys;
 using WebStore.Domain.EntitysDTO;
+using Microsoft.Extensions.Logging;
 
 namespace WebStore.Controllers
 {
@@ -38,29 +39,44 @@ namespace WebStore.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult CheckOut(OrderDetailsViewModel model)
+        public IActionResult CheckOut(OrderDetailsViewModel model, [FromServices] ILogger<CartController> log)
         {
             if (ModelState.IsValid)
             {
-                var OrderDetails = orderService.CreateOrder(new CreateOrderModel
+                log.LogInformation($"Отправка нового заказа для сохранения в БД для пользователя {User.Identity.Name}");
+                OrderDTO OrderDetails;
+                try
                 {
-                    OrderItems = cartService.TransformCart().Items.Select(e=>new OrderItemDTO { 
-                        ProductId=e.Key.Id,
-                        Quantity=e.Value,
-                        
-                    }).ToList(),
-                    //Cart=cartService.TransformCart(),
-                    Order=model.Order
-                }, User.Identity.Name);
+                    OrderDetails = orderService.CreateOrder(new CreateOrderModel
+                    {
+                        OrderItems = cartService.TransformCart().Items.Select(e => new OrderItemDTO
+                        {
+                            ProductId = e.Key.Id,
+                            Quantity = e.Value,
+
+                        }).ToList(),
+                        //Cart=cartService.TransformCart(),
+                        Order = model.Order
+                    }, User.Identity.Name);
+                }
+                catch (Exception e)
+                {
+                    log.LogError($"При обращении к сервису заказов возникли проблемы. {e.Message}");
+                    throw; //Здесь нужен редирект на что-то осмысленное.
+                }
                 cartService.RemoveAll();
+                log.LogInformation($"Заказ создан и записан в БД. Идентфикатор заказа {OrderDetails.Id}");
                 return RedirectToAction("OrderConfirmed", new { id = OrderDetails.Id });
-            };
-            
-            return View("Details", new OrderDetailsViewModel
+            }
+            else
             {
-                Cart = cartService.TransformCart(),
-                Order = model.Order
-            });
+                log.LogError($"При оформлении заказа передана не валидная модель.");
+                return View("Details", new OrderDetailsViewModel
+                {
+                    Cart = cartService.TransformCart(),
+                    Order = model.Order
+                });
+            }
         }
 
         public IActionResult OrderConfirmed(int id)
