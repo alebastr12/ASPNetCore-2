@@ -24,9 +24,13 @@ namespace WebStore.Clients.ProductClient
 
         public void Delete(int? id) => Delete($"{_serviceAddress}/{id}");
 
+        public BrandDTO GetBrandById(int Id) => Get<BrandDTO>($"{_serviceAddress}/brands/{Id}");
+
         public IEnumerable<BrandDTO> GetBrands() => Get<List<BrandDTO>>($"{_serviceAddress}/brands");
 
         public IEnumerable<CategoryDTO> GetCategories()=> Get<List<CategoryDTO>>($"{_serviceAddress}/categoryes");
+
+        public CategoryDTO GetCategoryById(int Id)=> Get<CategoryDTO>($"{_serviceAddress}/categoryes/{Id}");
 
         public ProductDTO GetProductById(int id) => Get<ProductDTO>($"{_serviceAddress}/{id}");
 

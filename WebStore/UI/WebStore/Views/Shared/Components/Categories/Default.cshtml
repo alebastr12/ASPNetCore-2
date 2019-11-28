@@ -1,9 +1,9 @@
-﻿@model IEnumerable<CategoryViewModel>
+﻿@model CategoryCompleteViewModel
 
 <h2>Category</h2>
 <div class="panel-group category-products" id="accordian">
     <!--category-productsr-->
-    @foreach (var parentCategory in Model)
+    @foreach (var parentCategory in Model.Categories)
     {
         if (parentCategory.ChildCategories.Count > 0) // есть дочерние категории
         {
@@ -16,12 +16,12 @@
                         </a>
                     </h4>
                 </div>
-                <div id="@parentCategory.Name.ToLower()" class="panel-collapse collapse">
+                <div id="@parentCategory.Name.ToLower()" class="panel-collapse collapse @(parentCategory.Id == Model.CurrentParrentCategory ? "in": null)">
                     <div class="panel-body">
                         <ul>
                             @foreach (var childCategory in parentCategory.ChildCategories)
                             {
-                                <li>
+                                <li @(childCategory.Id == Model.CurrentcategoryId ? "class=active" : null)>
                                     <a asp-controller="Catalog" asp-action="Shop" asp-route-CategoryId="@childCategory.Id">
                                         @childCategory.Name
                                     </a>
@@ -36,8 +36,8 @@
         else
         {
             <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4 class="panel-title">
+                <div class="panel-heading" >
+                    <h4 class="panel-title" @(parentCategory.Id == Model.CurrentcategoryId ? "class=active" : null)>
                         <a asp-controller="Catalog" asp-action="Shop" asp-route-CategoryId="@parentCategory.Id">
                             @parentCategory.Name
                         </a>

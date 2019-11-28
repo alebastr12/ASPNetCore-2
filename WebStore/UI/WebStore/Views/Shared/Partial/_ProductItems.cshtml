@@ -11,7 +11,7 @@
                 <div class="product-image-wrapper">
                     <div class="single-products">
                         <div class="productinfo text-center">
-                            <a asp-action="ProductDetails" asp-route-id="@item.Id">
+                            <a asp-action="ProductDetails" asp-route-id="@item.Id" asp-route-FromBrand="true">
                                 <img src="~/images/shop/@item.ImageUrl" alt="" />
                                 <h2>@item.Price.ToString()</h2>
                                 <p>@item.Name</p>
