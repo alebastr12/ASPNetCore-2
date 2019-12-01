@@ -63,29 +63,32 @@
                         <div class="logo pull-left">
                             <a asp-controller="Home" asp-action="Index"><img src="~/images/home/logo.png" alt="" /></a>
                         </div>
-                        <div class="btn-group pull-right">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    USA
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Canada</a></li>
-                                    <li><a href="#">UK</a></li>
-                                </ul>
-                            </div>
-
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    DOLLAR
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Canadian Dollar</a></li>
-                                    <li><a href="#">Pound</a></li>
-                                </ul>
-                            </div>
+                        <div class="pull-right" id="cart-container">
+                            <vc:cart />
                         </div>
+                        @*<div class="btn-group pull-right">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+                                        USA
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Canada</a></li>
+                                        <li><a href="#">UK</a></li>
+                                    </ul>
+                                </div>
+
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+                                        DOLLAR
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Canadian Dollar</a></li>
+                                        <li><a href="#">Pound</a></li>
+                                    </ul>
+                                </div>
+                            </div>*@
                     </div>
 
                     @await Html.PartialAsync("Partial/_LoginLogout")
@@ -314,6 +317,19 @@
     <script src="~/js/price-range.js"></script>
     <script src="~/js/jquery.prettyPhoto.js"></script>
     <script src="~/js/main.js"></script>
+
+    <script src="~/js/Cart/CartLogic.js" asp-append-version="true"></script>
+
+    <script>
+        $(function() {
+            Cart.init({
+                getCartViewLink: "@Url.Action("GetCartView","Cart")",
+                addToCartLink: "@Url.Action("AddToCartAPI","Cart")",
+                removeFromCartLink: "@Url.Action("RemoveFromCartAPI","Cart")"
+            });
+        })
+    </script>
+
     @*<script src="~/lib/font-awesome/js/all.js"></script>*@
 </body>
 </html>

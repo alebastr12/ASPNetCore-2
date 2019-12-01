@@ -62,14 +62,16 @@
                                 <span>@Model.Price.ToString("C")</span>
                                 <label>Quantity:</label>
                                 <input type="text" value="3" />
-                                <a class="btn btn-fefault cart"
-                                   asp-controller="Cart"
+                                <a class="btn btn-fefault cart add-to-cart"
+                                   href="#"
+                                   data-id="@Model.Id"
+                                   @*asp-controller="Cart"
                                    asp-action="AddToCart"
                                    asp-route-id="@Model.Id"
-                                   asp-route-returnUrl="@Context.Request.Path"
+                                   asp-route-returnUrl="@Context.Request.Path"*@
                                    >
                                     <i class="fa fa-shopping-cart"></i>
-                                    Add to cart
+                                    Добавить в корзину
                                 </a>
                             </span>
                             <p><b>Availability:</b> In Stock</p>

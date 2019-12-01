@@ -22,6 +22,7 @@ namespace WebStore.Services.Services
                 if (cookie is null)
                 {
                     var cart = new Cart();
+                    cart.Items = new List<CartItem>();
                     cookies.Append(_CartName, JsonConvert.SerializeObject(cart));
                     return cart;
                 }

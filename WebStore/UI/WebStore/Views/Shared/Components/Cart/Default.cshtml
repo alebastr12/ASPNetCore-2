@@ -1,0 +1,17 @@
+﻿@model CartViewModel
+
+@{
+    if (User.Identity.IsAuthenticated)
+    {
+        <div>
+            В <a asp-controller="Cart" asp-action="Details">&nbsp;корзине</a> @Model.ItemsCount товаров
+        </div>
+    }
+    else
+    {
+        <div>
+            <a asp-controller="Account" asp-action="Login">&nbsp;Авторизуйтесь</a> для покупок 
+        </div>
+    }
+}
+
