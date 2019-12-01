@@ -325,7 +325,9 @@
             Cart.init({
                 getCartViewLink: "@Url.Action("GetCartView","Cart")",
                 addToCartLink: "@Url.Action("AddToCartAPI","Cart")",
-                removeFromCartLink: "@Url.Action("RemoveFromCartAPI","Cart")"
+                removeFromCartLink: "@Url.Action("RemoveFromCartAPI","Cart")",
+                decrementLink: "@Url.Action("DecrementFromCartAPI","Cart")",
+                removeAllLink: "@Url.Action("RemoveAllAPI","Cart")"
             });
         })
     </script>

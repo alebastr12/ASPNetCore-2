@@ -2,7 +2,9 @@
     _properties:{
         getCartViewLink: "",
         addToCartLink: "",
-        removeFromCartLink: ""
+        removeFromCartLink: "",
+        decrementLink: "",
+        removeAllLink:""
     },
 
     init: function (properties) {
@@ -12,6 +14,74 @@
     initEvents: function () {
         $(".add-to-cart").click(Cart.addToCart);
         $(".cart_quantity_delete").click(Cart.removeFromCart);
+        $(".cart_quantity_up").click(Cart.incrementItem);
+        $(".cart_quantity_down").click(Cart.decrementItem);
+        $(".cart_clear").click(Cart.clearCart);
+    },
+    clearCart: function (event) {
+        event.preventDefault();
+
+        $.get(Cart._properties.removeAllLink + "/")
+            .done(function(){
+                $(".cart_item").each(function () {
+                    var container = $(this);
+                    container.remove();
+                });
+                var total = 0;
+                var value = total.toLocaleString("ru-RU", { style: "currency", currency: "RUB" });
+                $("#total-order-sum").html(value);
+                Cart.refreshCartView();
+            })
+            .fail(function () { console.log("remove all fail"); });
+        
+    },
+    incrementItem: function (event) {
+        event.preventDefault();
+
+        var button = $(this);
+        var id = button.data("id");
+        var container = button.closest("tr");
+
+        $.get(Cart._properties.addToCartLink + "/" + id)
+            .done(function () {
+                var count = parseInt($(".cart_quantity_input", container).val());
+                $(".cart_quantity_input", container).val(count + 1);
+                Cart.refreshPrice(container);
+                Cart.refreshCartView();
+            })
+            .fail(function () { console.log("incrementItem fail"); });
+    },
+    decrementItem: function (event) {
+        event.preventDefault();
+
+        var button = $(this);
+        var id = button.data("id");
+        var container = button.closest("tr");
+
+        $.get(Cart._properties.decrementLink + "/" + id)
+            .done(function () {
+                var count = parseInt($(".cart_quantity_input", container).val());
+                if (count > 1) {
+                    $(".cart_quantity_input", container).val(count - 1);
+                    Cart.refreshPrice(container);
+                } else {
+                    container.remove();
+                    Cart.refreshTotalPrice();
+                }
+                Cart.refreshCartView();
+            })
+            .fail(function () { console.log("decrementItem fail"); });
+    },
+    refreshPrice: function (container) {
+        var quantity = parseInt($(".cart_quantity_input", container).val());
+        var price = parseFloat($(".cart_price", container).data("price"));
+        var totalPrice = quantity * price;
+
+        var value = totalPrice.toLocaleString("ru-RU", { style: "currency", currency: "RUB" });
+        $(".cart_total_price", container).data("price", totalPrice);
+        $(".cart_total_price", container).html(value);
+
+        Cart.refreshTotalPrice();
     },
     addToCart: function (event) {
         event.preventDefault();

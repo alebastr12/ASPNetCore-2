@@ -23,16 +23,19 @@
                 <tbody>
                     @foreach (var item in Model.Cart.Items)
                     {
-                        <tr>
+                        <tr class="cart_item">
                             <td class="cart_product">
                                 <a href=""><img src="~/images/shop/@item.Key.ImageUrl" alt=""></a>
                             </td>
                             <td class="cart_description">
-                                <h4><a asp-controller="Catalog" asp-action="ProductDetails" asp-route-id="@item.Key.Id">
-                                    @item.Key.Name</a></h4>
+                                <h4>
+                                    <a asp-controller="Catalog" asp-action="ProductDetails" asp-route-id="@item.Key.Id">
+                                        @item.Key.Name
+                                    </a>
+                                </h4>
                                 <p>Web ID: 1089772</p>
                             </td>
-                            <td class="cart_price">
+                            <td class="cart_price" data-price="@item.Key.Price">
                                 <p>@item.Key.Price.ToString("C")</p>
                             </td>
                             <td class="cart_quantity">
@@ -46,36 +49,47 @@
                                        class="cart_quantity_up">
                                         +
                                     </a>
-                                    <input class="cart_quantity_input" type="text" name="quantity" value="@item.Value" autocomplete="off" size="2">
-                                    <a class="cart_quantity_down" 
+                                    <input class="cart_quantity_input" readonly="readonly" type="text" name="quantity" value="@item.Value" autocomplete="off" size="2">
+                                    <a class="cart_quantity_down"
                                        data-id="@item.Key.Id"
                                        href="#"
-                                       @*asp-controller="Cart" 
-                                       asp-action="DecrementFromCart" 
-                                       asp-route-id="@item.Key.Id"*@
-                                       > - </a>
+                                       @*asp-controller="Cart"
+                                       asp-action="DecrementFromCart"
+                                       asp-route-id="@item.Key.Id"*@> - </a>
                                 </div>
                             </td>
                             <td class="cart_total">
                                 <p class="cart_total_price" data-price="@(item.Value * item.Key.Price)">
-                                    @((item.Key.Price*item.Value).ToString("C"))
+                                    @((item.Key.Price * item.Value).ToString("C"))
                                 </p>
                             </td>
                             <td class="cart_delete">
-                                <a class="cart_quantity_delete" 
+                                <a class="cart_quantity_delete"
                                    data-id="@item.Key.Id"
                                    href="#"
                                    @*asp-controller="Cart"
                                    asp-action="RemoveFromCart"
-                                   asp-route-id="@item.Key.Id"*@
-                                   ><i class="fa fa-times"></i></a>
+                                   asp-route-id="@item.Key.Id"*@><i class="fa fa-times"></i></a>
                             </td>
                         </tr>
                     }
 
-
+                    @if (@Model.Cart.ItemsCount > 0)
+                    {
+                <tr class="cart_item">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a href="#" class="btn btn-default center-block cart_clear">Очистить корзину</a>
+                    </td>
+                </tr>
+                    }
                 </tbody>
             </table>
+            
+
         </div>
     </div>
 </section> <!--/#cart_items-->
