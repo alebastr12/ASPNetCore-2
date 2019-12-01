@@ -34,9 +34,9 @@ namespace WebStore.Clients.ProductClient
 
         public ProductDTO GetProductById(int id) => Get<ProductDTO>($"{_serviceAddress}/{id}");
 
-        public IEnumerable<ProductDTO> GetProducts(ProductFilter filter) => Post(_serviceAddress, filter)
+        public PagedProductDTO GetProducts(ProductFilter filter) => Post(_serviceAddress, filter)
             .Content
-            .ReadAsAsync<List<ProductDTO>>()
+            .ReadAsAsync<PagedProductDTO>()
             .Result;
 
         public void UpdateProduct(ProductDTO item) => Put<ProductDTO>(_serviceAddress, item);

@@ -49,7 +49,7 @@ namespace WebStore.Areas.Admin.Controllers
             //ViewBag.Category = categoryList;
             var products = new AdminProductViewModel
             {
-                ProductList = productService.GetProducts(filter).Select(ProductMapper.FromDTO),
+                ProductList = productService.GetProducts(filter).Products.Select(ProductMapper.FromDTO),
                 BrandList = brandList,
                 CategoryList = categoryList
             };

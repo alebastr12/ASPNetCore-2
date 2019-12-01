@@ -14,5 +14,9 @@ namespace WebStore.Domain.Filters
         [Display(Name = "Брэнд")]
         public int? BrandId { get; set; }
         public List<int> Ids { get; set; }
+
+        public int Page { get; set; }
+
+        public int? PageSize { get; set; }
     }
 }

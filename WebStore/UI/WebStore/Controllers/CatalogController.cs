@@ -42,7 +42,7 @@ namespace WebStore.Controllers
             {
                 BrandId = BrandId,
                 CategoryId = CategoryId,
-                Products = products.Select(p => new ProductViewModel()
+                Products = products.Products.Select(p => new ProductViewModel()
                 {
                     Id = p.Id,
                     ImageUrl = p.ImageUrl,

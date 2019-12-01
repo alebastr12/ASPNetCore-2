@@ -204,19 +204,22 @@ namespace WebStore.Tests
                 }
             };
             int expected_count_item = 10;
-            var products = new List<ProductDTO>(
-                Enumerable.Range(0, expected_count_item)
-                .Select(i => new ProductDTO
-                {
-                    Id = i,
-                    Name = $"Product {i}",
-                    Price = 100m,
-                    Order = 0,
-                    ImageUrl = $"Product{i}.png",
-                    Brand = new BrandDTO { Id = 1, Name = "BrandName" },
-                    Category = new CategoryDTO { Id=1,Name="CategoryName"}
-                })
-            );
+            var products = new PagedProductDTO
+            {
+                Products = Enumerable.Range(0, expected_count_item)
+                    .Select(i => new ProductDTO
+                    {
+                        Id = i,
+                        Name = $"Product {i}",
+                        Price = 100m,
+                        Order = 0,
+                        ImageUrl = $"Product{i}.png",
+                        Brand = new BrandDTO { Id = 1, Name = "BrandName" },
+                        Category = new CategoryDTO { Id = 1, Name = "CategoryName" }
+                    }),
+                TotalCount= expected_count_item
+            };
+
 
             var product_data_mock = new Mock<IProductService>();
             product_data_mock

@@ -112,7 +112,7 @@ namespace WebStore.Services.Services
                 .ToDTO();
         }
 
-        public IEnumerable<ProductDTO> GetProducts(ProductFilter filter)
+        public PagedProductDTO GetProducts(ProductFilter filter)
         {
             var dbItems = _context.Products.Include(p=>p.Category).Include(p=>p.Brand).AsQueryable();
             if (filter.Ids?.Count > 0)
@@ -131,7 +131,22 @@ namespace WebStore.Services.Services
             {
                 dbItems = dbItems.Where(p => p.Name.Contains(filter.Name));
             }
-            return dbItems.AsEnumerable().Select(ProductMapper.ToDTO);
+            if (filter?.PageSize != null)
+            {
+                dbItems = dbItems
+                   .Skip((filter.Page - 1) * (int)filter.PageSize)
+                   .Take((int)filter.PageSize);
+            }
+            var total_count = dbItems.Count();
+
+            return new PagedProductDTO
+            {
+                Products = dbItems
+                   .AsEnumerable()
+                   .Select(ProductMapper.ToDTO),
+                TotalCount = total_count
+            };
+            
         }
 
         public void UpdateProduct(ProductDTO item)

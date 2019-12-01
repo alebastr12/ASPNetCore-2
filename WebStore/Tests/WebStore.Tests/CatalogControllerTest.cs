@@ -75,17 +75,23 @@ namespace WebStore.Tests
             var product_data_mock = new Mock<IProductService>();
             product_data_mock
                 .Setup(p => p.GetProducts(It.IsAny<ProductFilter>()))
-                .Returns<ProductFilter>(filter => Enumerable.Range(0, expected_count_product).Select(i =>
-                 new ProductDTO
-                 {
-                     Id = i,
-                     Brand = new BrandDTO { Id = 1, Name = $"BrandName_{i}", Order = 0 },
-                     Category = new CategoryDTO { Id = 1, Name = $"CategoryName_{i}", Order = 0 },
-                     ImageUrl = $"Image_{i}",
-                     Name = $"Product_{i}",
-                     Order = i,
-                     Price = 100 * i
-                 }));
+                .Returns<ProductFilter>(filter =>
+                    new PagedProductDTO
+                    {
+                        Products = Enumerable.Range(0, expected_count_product).Select(i =>
+                            new ProductDTO
+                            {
+                                Id = i,
+                                Brand = new BrandDTO { Id = 1, Name = $"BrandName_{i}", Order = 0 },
+                                Category = new CategoryDTO { Id = 1, Name = $"CategoryName_{i}", Order = 0 },
+                                ImageUrl = $"Image_{i}",
+                                Name = $"Product_{i}",
+                                Order = i,
+                                Price = 100 * i
+                            }),
+                        TotalCount = expected_count_product
+                    });
+
             var controller = new CatalogController(product_data_mock.Object);
 
             var result = controller.Shop(expected_category_id, expected_brand_id);
