@@ -6,16 +6,19 @@ using WebStore.Interfaces.Services;
 using WebStore.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Domain.Filters;
+using Microsoft.Extensions.Configuration;
 
 namespace WebStore.Controllers
 {
     public class CatalogController : Controller
     {
         private readonly IProductService _productService;
+        private readonly IConfiguration config;
 
-        public CatalogController(IProductService productService)
+        public CatalogController(IProductService productService, IConfiguration config)
         {
             _productService = productService;
+            this.config = config;
         }
         public IActionResult ProductDetails(int id)
         {
@@ -32,10 +35,11 @@ namespace WebStore.Controllers
                 BrandName = product.Brand?.Name ?? string.Empty
             });
         }
-        public IActionResult Shop(int? CategoryId, int? BrandId)
+        public IActionResult Shop(int? CategoryId, int? BrandId, int Page = 1)
         {
+            var page_size = int.Parse(config["PageSize"]);
             var products = _productService.GetProducts(
-                new ProductFilter { BrandId = BrandId, CategoryId = CategoryId });
+                new ProductFilter { BrandId = BrandId, CategoryId = CategoryId , Page=Page, PageSize=page_size});
 
             // сконвертируем в CatalogViewModel
             var model = new CatalogViewModel()
@@ -50,7 +54,13 @@ namespace WebStore.Controllers
                     Order = p.Order,
                     Price = p.Price,
                     BrandName=p.Brand.Name
-                }).OrderBy(p => p.Order).ToList()
+                }).OrderBy(p => p.Order).ToList(),
+                PageViewModel=new PageViewModel
+                {
+                    PageNumber = Page,
+                    PageSize = page_size,
+                    TotalItems = products.TotalCount
+                }
             };
 
             return View(model);

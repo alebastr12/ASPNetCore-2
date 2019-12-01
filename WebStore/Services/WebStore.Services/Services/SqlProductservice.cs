@@ -131,14 +131,14 @@ namespace WebStore.Services.Services
             {
                 dbItems = dbItems.Where(p => p.Name.Contains(filter.Name));
             }
+            var total_count = dbItems.Count();
             if (filter?.PageSize != null)
             {
                 dbItems = dbItems
                    .Skip((filter.Page - 1) * (int)filter.PageSize)
                    .Take((int)filter.PageSize);
             }
-            var total_count = dbItems.Count();
-
+            
             return new PagedProductDTO
             {
                 Products = dbItems

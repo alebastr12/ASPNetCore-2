@@ -11,5 +11,6 @@ namespace WebStore.Domain.Models
         public int? BrandId { get; set; }
         public int? CategoryId { get; set; }
         public IEnumerable<ProductViewModel> Products { get; set; }
+        public PageViewModel PageViewModel { get; set; }
     }
 }
