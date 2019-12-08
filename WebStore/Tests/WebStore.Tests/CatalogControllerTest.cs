@@ -95,7 +95,7 @@ namespace WebStore.Tests
                         TotalCount = expected_count_product
                     });
             var config_data_mock = new Mock<IConfiguration>();
-
+            config_data_mock.Setup(p => p["PageSize"]).Returns(expected_count_product.ToString());
             var controller = new CatalogController(product_data_mock.Object,config_data_mock.Object);
 
             var result = controller.Shop(expected_category_id, expected_brand_id);
