@@ -14,7 +14,7 @@
             : BreadCrumbType.None;
     }
 
-    if ((string) ViewContext.RouteData.Values["action"] == nameof(CatalogController.ProductDetails))
+    if ((string)ViewContext.RouteData.Values["action"] == nameof(CatalogController.ProductDetails))
     {
         type = BreadCrumbType.Product;
     }
@@ -45,8 +45,18 @@
     }
 }
 
-    <div class="container">
-        @await Component.InvokeAsync("BreadCrumbs", new { Type = type, id, FromType = from_type })
+<div class="container">
+    @await Component.InvokeAsync("BreadCrumbs", new { Type = type, id, FromType = from_type })
 
-        @RenderBody()
-    </div>
+    @RenderBody()
+</div>
+
+@section Styles
+{
+    @RenderSection("Styles", false);
+}
+
+@section Scripts
+{
+    @RenderSection("Scripts", false)
+}
