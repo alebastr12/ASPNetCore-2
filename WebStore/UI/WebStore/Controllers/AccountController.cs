@@ -20,6 +20,13 @@ namespace WebStore.Controllers
             this.userManager = userManager;
             this.signInManager = signInManager;
         }
+        public async Task<IActionResult> IsNameFree(string UserName)
+        {
+            var user = await userManager.FindByNameAsync(UserName);
+            if (user is null)
+                return Json("true");
+            return Json($"Имя пользователя \" {UserName} \" уже используется.");
+        }
         [HttpGet]
         public IActionResult Login()
         {
