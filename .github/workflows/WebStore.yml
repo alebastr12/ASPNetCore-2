@@ -19,7 +19,7 @@ jobs:
     - name: dotnet build and test
       run: |
         dotnet build --configuration Debug WebStore/
-        dotnet test
+        dotnet test WebStore/
         
   publish-webstore:
     runs-on: ${{ matrix.os }}
