@@ -108,6 +108,33 @@ namespace WebStore.Controllers
             cartService.AddToCart(id);
             return Redirect(returnUrl);
         }
+        #region API
+        [AllowAnonymous]
+        public IActionResult GetCartView() => ViewComponent("Cart");
+
+        public IActionResult AddToCartAPI(int id)
+        {
+            cartService.AddToCart(id);
+            return Json(new { id, message = $"Товар с идентификатором: {id} добавлен в корзину" });
+        }
+        public IActionResult DecrementFromCartAPI(int id)
+        {
+            cartService.DecrementFromCart(id);
+            return Json(new { id, message = $"Товар с идентификатором: {id} убран из корзины" });
+        }
+
+        public IActionResult RemoveFromCartAPI(int id)
+        {
+            cartService.RemoveFromCart(id);
+            return Json(new { id, message = $"Товар с идентификатором: {id} удвлен из корзину" });
+        }
+
+        public IActionResult RemoveAllAPI()
+        {
+            cartService.RemoveAll();
+            return Json(new {message = $"Корзина очищенна." });
+        }
+        #endregion
 
     }
 }

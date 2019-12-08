@@ -4,6 +4,12 @@
         <name>WebStore.Domain</name>
     </assembly>
     <members>
+        <member name="P:WebStore.Domain.EntitysDTO.PagedProductDTO.Products">
+            <summary>Товары страницы</summary>
+        </member>
+        <member name="P:WebStore.Domain.EntitysDTO.PagedProductDTO.TotalCount">
+            <summary>Полное количество товаров в каталоге</summary>
+        </member>
         <member name="P:WebStore.Domain.Models.CategoryViewModel.ChildCategories">
             <summary>
             Список дочерних категорий

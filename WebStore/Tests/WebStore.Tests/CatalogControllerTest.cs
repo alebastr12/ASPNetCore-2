@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -26,7 +28,7 @@ namespace WebStore.Tests
             string expected_brand_name = $"brand {expected_id}";
             string expected_category_name = $"category {expected_id}";
             string expected_image = $"image of {expected_id} product";
-
+            var config_data_mock = new Mock<IConfiguration>();
             var product_data_mock = new Mock<IProductService>();
             product_data_mock
                 .Setup(p => p.GetProductById(It.IsAny<int>()))
@@ -40,7 +42,7 @@ namespace WebStore.Tests
                     Order=0,
                     Price=expected_price
                 });
-            var controller = new CatalogController(product_data_mock.Object);
+            var controller = new CatalogController(product_data_mock.Object, config_data_mock.Object);
 
             var result = controller.ProductDetails(expected_id);
 
@@ -55,12 +57,13 @@ namespace WebStore.Tests
         [TestMethod]
         public void ProductDetails_Returns_NotFound()
         {
+            var config_data_mock = new Mock<IConfiguration>();
             var product_data_mock = new Mock<IProductService>();
             product_data_mock
                 .Setup(p => p.GetProductById(It.IsAny<int>()))
                 .Returns<int>(id=>default);
 
-            var controller = new CatalogController(product_data_mock.Object);
+            var controller = new CatalogController(product_data_mock.Object,config_data_mock.Object);
 
             var result = controller.ProductDetails(1);
 
@@ -75,18 +78,25 @@ namespace WebStore.Tests
             var product_data_mock = new Mock<IProductService>();
             product_data_mock
                 .Setup(p => p.GetProducts(It.IsAny<ProductFilter>()))
-                .Returns<ProductFilter>(filter => Enumerable.Range(0, expected_count_product).Select(i =>
-                 new ProductDTO
-                 {
-                     Id = i,
-                     Brand = new BrandDTO { Id = 1, Name = $"BrandName_{i}", Order = 0 },
-                     Category = new CategoryDTO { Id = 1, Name = $"CategoryName_{i}", Order = 0 },
-                     ImageUrl = $"Image_{i}",
-                     Name = $"Product_{i}",
-                     Order = i,
-                     Price = 100 * i
-                 }));
-            var controller = new CatalogController(product_data_mock.Object);
+                .Returns<ProductFilter>(filter =>
+                    new PagedProductDTO
+                    {
+                        Products = Enumerable.Range(0, expected_count_product).Select(i =>
+                            new ProductDTO
+                            {
+                                Id = i,
+                                Brand = new BrandDTO { Id = 1, Name = $"BrandName_{i}", Order = 0 },
+                                Category = new CategoryDTO { Id = 1, Name = $"CategoryName_{i}", Order = 0 },
+                                ImageUrl = $"Image_{i}",
+                                Name = $"Product_{i}",
+                                Order = i,
+                                Price = 100 * i
+                            }),
+                        TotalCount = expected_count_product
+                    });
+            var config_data_mock = new Mock<IConfiguration>();
+
+            var controller = new CatalogController(product_data_mock.Object,config_data_mock.Object);
 
             var result = controller.Shop(expected_category_id, expected_brand_id);
 

@@ -29,7 +29,7 @@ namespace WebStore.Services.Services
         public void AddToCart(int id)
         {
             var cart = Cart;
-            var item = cart.Items.FirstOrDefault(i => i.ProductId == id);
+            var item = cart.Items?.FirstOrDefault(i => i.ProductId == id);
             if (item is null)
                 cart.Items.Add(new CartItem { ProductId = id, Quantity = 1 });
             else
@@ -74,7 +74,7 @@ namespace WebStore.Services.Services
             var products = productService.GetProducts(new ProductFilter
             {
                 Ids = Cart.Items?.Select(c => c.ProductId).ToList()
-            }).Select(p => new ProductViewModel
+            }).Products.Select(p => new ProductViewModel
             {
                 Id = p.Id,
                 ImageUrl = p.ImageUrl,

@@ -106,7 +106,7 @@ namespace WebStore.ServicesHosting.Controllers
         /// <param name="filter">Фильтр запроса</param>
         /// <returns>Список продуктов</returns>
         [HttpPost]
-        public IEnumerable<ProductDTO> GetProducts([FromBody] ProductFilter filter) => productService.GetProducts(filter);
+        public PagedProductDTO GetProducts([FromBody] ProductFilter filter) => productService.GetProducts(filter);
         [HttpPut]
         public void UpdateProduct(ProductDTO item)
         {

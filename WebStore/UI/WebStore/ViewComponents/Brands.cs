@@ -34,7 +34,7 @@ namespace WebStore.ViewComponents
                 Id = b.Id,
                 Name = b.Name,
                 Order = b.Order,
-                ProductCount = _productService.GetProducts(new ProductFilter { BrandId = b.Id, CategoryId = null }).Count()
+                ProductCount = _productService.GetProducts(new ProductFilter { BrandId = b.Id, CategoryId = null }).Products.Count()
             }).OrderBy(b => b.Order).ToList();
             
         }
